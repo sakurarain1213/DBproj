@@ -1,0 +1,30 @@
+server:
+  port: 8080
+#防止8080和8081冲突
+
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sc?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    username: root
+    password: 123456
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
+  freemarker:
+    cache: false
+#showSql
+# mybatis-plus配置
+mybatis-plus:
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: false
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名   #这个是扫描到Entity实体包的路径，可根据自己的配置
+  type-aliases-package: com.example.hou.entity
+  #xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapperLocations: classpath*:mapper/**Mapper.xml
+#尤其注意这个路径问题啊啊啊啊啊啊啊

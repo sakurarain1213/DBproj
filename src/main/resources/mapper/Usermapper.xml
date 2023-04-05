@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hou.mapper.UserMapper"><!--注意这里写mapper类-->
+   <!--<select id="queryLimit" resultType="User">
+        select * from user limit #{currentPage},#{pageSize};
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        insert into user(userName,userPassword) values(#{userName},#{userPassword});
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user set userName=#{userName},userPassword=#{userPassword} where userId=#{userId};
+    </update>
+
+    <delete id="deleteUser" parameterType="User">
+        delete from user where userId=#{userId};
+    </delete>
+    -->
+    <resultMap id="BaseResultMap" type="com.example.hou.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="passWord" jdbcType="VARCHAR" property="passWord" />
+        <result column="realName" jdbcType="VARCHAR" property="realName" />
+    </resultMap>
+    <!--查询用户信息-->
+    <select id="getUserInfo" resultType="com.example.hou.entity.User">
+        select * from user where id = #{id}
+    </select>
+    <!--删除用户信息-->
+    <delete id="deleteById" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+    <!--返回所有用户信息-->
+    <select id="selectAll"  resultType="com.example.hou.entity.User">
+        select * from user
+    </select>
+
+    <!--增加用户信息-->
+    <insert id="save" parameterType="com.example.hou.entity.User" >
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                userName,
+            </if>
+            <if test="passWord != null" >
+                passWord,
+            </if>
+
+            <if test="realName != null" >
+                realName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null" >
+                #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null" >
+                #{realName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--根据id更改用户信息-->
+    <update id="update" parameterType="com.example.hou.entity.User">
+        update user
+        <set >
+            <if test="userName != null" >
+                userName = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null" >
+                passWord = #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null" >
+                realName = #{realName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
+

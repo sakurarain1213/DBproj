@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hou.mapper.PaperMapper"><!--注意这里写mapper类-->
+
+    <resultMap id="BaseResultMap" type="com.example.hou.entity.Paper">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="paperName" jdbcType="VARCHAR" property="paperName" />
+
+    </resultMap>
+
+    <select id="getPaperInfo" resultType="com.example.hou.entity.Paper">
+        select * from paper where id = #{id}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from paper where id=#{id}
+    </delete>
+
+    <select id="selectAll"  resultType="com.example.hou.entity.Paper">
+        select * from paper
+    </select>
+
+
+    <insert id="save" parameterType="com.example.hou.entity.Paper" >
+        insert into paper
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="paperName != null" >
+                paperName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="paperName != null" >
+                #{paperName,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+
+    <!--根据id更改信息-->
+    <update id="update" parameterType="com.example.hou.entity.Paper">
+        update paper
+        <set >
+            <if test="paperName != null" >
+                paperName = #{paperName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
+
