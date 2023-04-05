@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 public class UserInfoController {
     @Autowired
+
+
     UserInfoService userInfoService;
     //添加@ResponseBody注解将返回的数据自动转化为json, @RequestBody将接收的数据转化为json
     @RequestMapping("/login")
