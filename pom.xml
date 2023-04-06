@@ -89,6 +89,12 @@
             <version>2.2</version>
         </dependency>
 
+        <!-- jieba 分词库 https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
     </dependencies>
 
@@ -129,5 +135,12 @@
 
 
     </build>
+
+        <!-- https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
 </project>
