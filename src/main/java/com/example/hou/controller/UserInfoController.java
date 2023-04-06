@@ -35,6 +35,15 @@ public class UserInfoController {
             return ResultUtil.error(msg);
         }
     }
+    /*   登录用string的版本  作为参考 最好全用对象
+      public Result login(/*@RequestBody UserInfo userInfo String username,/*@RequestParam String password) {
+        String msg = userInfoService.loginService(username,password);
+        if (("SUCCESS").equals(msg)) {
+            return ResultUtil.success("登录成功");
+        } else {
+            return ResultUtil.error(msg);
+        }
+    } */
     /*
     @ResponseBody
     public Result login( String username, String password, HttpServletRequest request, HttpSession session, HttpServletResponse response) {

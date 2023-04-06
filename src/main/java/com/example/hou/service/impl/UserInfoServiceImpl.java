@@ -71,7 +71,23 @@ public class UserInfoServiceImpl /* extends ServiceImpl<UserInfoMapper, UserInfo
         }
         return "此用户不存在";
     }
+/*
+用string的登录版本    作为参考
+    @Override
+    public String loginService(String username,String password) {
 
+        UserInfo userInfo = userInfoMapper.searchByUsername(username);
+        if (userInfo != null) {
+            if (password.equals(userInfo.getPassword())) {
+                return "SUCCESS";
+            } else {
+                return "密码错误";
+            }
+        }
+        return "此用户不存在";
+    }
+
+ */
     @Override
     public String registerService(UserInfo userInfo) {
         UserInfo userE = userInfoMapper.searchByUsername(userInfo.getUsername());
