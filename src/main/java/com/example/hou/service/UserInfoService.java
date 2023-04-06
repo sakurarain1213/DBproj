@@ -1,13 +1,14 @@
 package com.example.hou.service;
 
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.hou.entity.UserInfo;
 
 
 
-public interface UserInfoService {
+public interface UserInfoService /*extends IService<UserInfo>*/ {
 
-    public String loginService(String uact, String upwd);
+    public String loginService(UserInfo user);
 
     public String registerService(UserInfo user);
 

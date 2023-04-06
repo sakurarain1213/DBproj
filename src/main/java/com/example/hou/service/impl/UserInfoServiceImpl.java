@@ -1,5 +1,6 @@
 package com.example.hou.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.hou.entity.UserInfo;
 import com.example.hou.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import com.example.hou.service.UserInfoService;
 
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService{
+
+public class UserInfoServiceImpl /* extends ServiceImpl<UserInfoMapper, UserInfo> */implements UserInfoService {
     @Autowired
     UserInfoMapper userInfoMapper;
 /*    也不用手搓
@@ -41,11 +43,27 @@ public class UserInfoServiceImpl implements UserInfoService{
     }
 */
 
-    @Override
+
+    //尝试将两个string改成一个整体的对象
+    /*
     public String loginService(String un, String pw) {
         UserInfo userInfo = userInfoMapper.searchByUsername(un);
         if (userInfo != null) {
             if (pw.equals(userInfo.getPassword())) {
+                return "SUCCESS";
+            } else {
+                return "密码错误";
+            }
+        }
+        return "此用户不存在";
+    }
+*/
+    @Override
+    public String loginService(UserInfo userInfo) {
+
+        UserInfo userE = userInfoMapper.searchByUsername(userInfo.getUsername());
+        if (userE != null) {
+            if (userE.getPassword().equals(userInfo.getPassword())) {
                 return "SUCCESS";
             } else {
                 return "密码错误";
