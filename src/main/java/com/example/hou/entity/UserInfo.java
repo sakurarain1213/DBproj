@@ -22,7 +22,7 @@ public class UserInfo {
         this.password = password;
 
     }*/
-    @TableId(value = "id",type = IdType.AUTO)  //@TableId 说明这条数据自增长也是对应数据库自增长的
+    @TableId(value = "user_id",type = IdType.AUTO)  //@TableId 说明这条数据自增长也是对应数据库自增长的
     private Integer id;
     @TableField("username")//这里和数据库表对应  不写注解的话 属性名就就要完全对应数据库列名
     private String username;
@@ -37,6 +37,7 @@ public class UserInfo {
   */
  //@TableField(strategy = FieldStrategy.IGNORED)//即允许空
  private String phone;
+
 
  /**
   * 电子邮箱
