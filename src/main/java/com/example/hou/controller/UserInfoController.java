@@ -91,6 +91,14 @@ public class UserInfoController {
             return ResultUtil.error(msg);
         }
     }
+
+    @RequestMapping("/update")
+    public Result update(@RequestBody UserInfo userInfo) {
+        String msg = userInfoService.updateService(userInfo);
+        if (("SUCCESS").equals(msg)) {
+            return ResultUtil.success("修改成功");}
+        else{ return ResultUtil.error(msg);}
+    }
       /*
     @RequestMapping("/register")
     @ResponseBody
