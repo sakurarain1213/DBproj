@@ -111,8 +111,15 @@ public class UserInfoServiceImpl /* extends ServiceImpl<UserInfoMapper, UserInfo
     @Override
     public String updateService(UserInfo user) {//传入的前端对象
         //用混合法  =对象+updatewrapper实现
+        //传null要用lambda update wrapper  再说
+
+        //找不到就直接返回错误
+       // UserInfo userE = userInfoMapper.searchByUsername(user.getUsername());
+       // if (userE == null) {return "用户不存在";}
+
         UserInfo temp = new UserInfo();
-        //修改内容
+        //修改内容 包括密码！！
+        temp.setPassword(user.getPassword());
         temp.setPhone(user.getPhone());
         temp.setGender(user.getGender());
         temp.setEmail(user.getEmail());
