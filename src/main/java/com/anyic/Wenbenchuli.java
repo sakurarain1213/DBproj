@@ -15,13 +15,15 @@ import java.util.LinkedHashMap;
 
 import java.util.Map;
 
-public class Wenbenchuli {
-    private static String basePath="C:\\Users\\w1625\\desktop\\hou_fin\\src";
+public class Wenbenchuli {//只要用前四个  加一个返回高频词list的方法
+    private static String basePath="C:\\Users\\w1625\\Desktop\\hou_fin\\src";
     public int wuru_Count;//侮辱次数
     public int guli_Count;//鼓励次数
     public int wenda_Count;//提问次数
 
     public float yusu;//语速
+
+
     public JiebaSegmenter segmenter;//jieba类
     public Set<String> stop_words;//停用词
     public List<String> result;//存储分词结果
@@ -109,7 +111,7 @@ public class Wenbenchuli {
         });
     }
     //对文本进行分析，获得各项指标
-    public void GetString_analyse(String data,float time){
+    public void GetString_analyse(String data,float time){//结束-开始时间  格式问题
         Load_dicts("dict.txt");
         yusu=GetWord_count(data);
         yusu=(yusu/time)*60;

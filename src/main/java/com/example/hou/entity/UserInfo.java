@@ -6,6 +6,20 @@ import lombok.Data;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 
+
+/*
+
+上传格式
+json
+{
+    "username":"1",
+    "password":"123"
+}
+
+ */
+
+
+
 @Data//@Data 就是lombok 的注解 自动生成了set get
 
 @AllArgsConstructor
