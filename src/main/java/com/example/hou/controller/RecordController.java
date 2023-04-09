@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -38,5 +40,21 @@ public class RecordController {
             return ResultUtil.error(msg);
         }
     }
+
+
+    @RequestMapping("/get")
+    //因为返回的是一个list  所以消息需要根据新的格式自定义
+    public Result recordGet(@RequestBody Record record) {
+        List<Record> l = recordService.recordGetService(record);
+        if (l.size()>0) {
+            return ResultUtil.success(l);//强大的result类可以自定义返回类型
+        }
+        else {
+            return ResultUtil.error("缺少查询条件或查询结果为空");
+        }
+    }
+
+
+
 }
 

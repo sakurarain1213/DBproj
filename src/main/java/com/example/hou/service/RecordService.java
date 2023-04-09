@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.hou.entity.Record;
 import com.example.hou.entity.UserInfo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -30,6 +32,6 @@ public interface RecordService /*extends IService<Record> */{
 
     public String recordAddService(Record record);
 
-    public String recordGetService(Record record);
+    public List<Record> recordGetService(Record record);
 
 }

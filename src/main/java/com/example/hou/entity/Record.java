@@ -21,17 +21,30 @@ import java.util.Date;
 上传格式
 
 {
+ {
     "username":"6",
-    "txtFile":"中文测试english test",
-    "endTime":"2023-04-09 12:12:12"
-    注意 一定要按照时分秒的格式 不能少
+    "startTime":"2023-04-10 23:59:50",
+    "endTime":"2023-04-10 23:59:59",
+    "txtFile":"傻逼sdhabi"
 }
+    注意 一定要按照时分秒的格式 不能少
+
+}
+
+查询
+{
+    "username":"6",
+    "startTime":"2023-04-06 23:59:59",
+    "endTime":"2023-04-09 23:59:59"
+}
+
 
  */
 
 @Data
 //@EqualsAndHashCode(callSuper = false)
 //@Accessors(chain = true)
+
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "record")
@@ -48,6 +61,7 @@ public class Record {
     /**
      * 课程主键
      */
+    @TableField("lesson_id")
     private Integer lessonId;
 
     /*
@@ -66,6 +80,7 @@ public class Record {
     /**
      * 语音内容
      */
+    @TableField("mp3_file")
     private Blob mp3File;
 
     /**
@@ -91,7 +106,71 @@ public class Record {
     /**
      * 评分  因为要细化 所以存成json
      */
-    private String score;//备注  json在实体类里还是用string
+    //一个字段存储Java对象序列化后的字段
+    //因为不能直接用字符串，所以用成了字节数组（Java）(但是不方便数据单独运算)
+    //@TableField(value="score",typeHandler = FastjsonTypeHandler.class)
+    private String score;//备注  json在实体类里还是用string  但是需要注解  现在尝试直接存一个对象
 
+/*
+*     Fastjson 是阿里巴巴提供的一个Java语言编写的高性能功能完善的 JSON 库，是目前Java语言中最快的 JSON 库，可以实现 Java 对象和 JSON 字符串的相互转换。
+      序列化： 将 集合数据转换为 json 数据；
+     反序列化：将  json 数据转换为 Java 对象。
+      java中如需返回JSON数据需要第三方jar包 ：例：  ①:jsonlib   ②: jackson  ③: fastjson(阿里巴巴)  ④:gson(谷歌)
+mysql可以存储Java对象。
+1、将Java对象中的每一个字段都存入表中。
+优点：每个字段都可以被检索
+缺点：针对每个需要存储的对象，都要创建数据表。一个类对应一张表
+2、将Java对象序列化之后，存入Blob字段或者Text。
+优点：可以存储超大的对象，并且没有大小限制
+缺点：Blob数据类型的缺点，检索上存在问题
+3、保存为JSON字符串，使用VARCHAR数据类型存储
+优点：可以存储完整的对象，反序列化也很方便。
+缺点：不方便检索内容，需要提前估计JSON字符串大小。
+场景：适合不需要检索，只用查询和存储展示。
+这里选择直接开多一点的列
+*
+* */
+    /**
+     * 侮辱词个数
+     */
+    @TableField("wuruCount")
+    private Integer wuruCount;
+
+    /**
+     * 具体
+     */
+    private String wuru;
+
+    /**
+     * 鼓励词个数
+     */
+    @TableField("guliCount")
+    private Integer guliCount;
+
+    /**
+     * 具体
+     */
+    private String guli;
+
+    /**
+     * 提问词个数
+     */
+    @TableField("tiwenCount")
+    private Integer tiwenCount;
+
+    /**
+     * 具体
+     */
+    private String tiwen;
+
+    /**
+     * 语速
+     */
+    private Float yusu;
+
+    /**
+     * 高频词
+     */
+    private String gaopin;
 
 }

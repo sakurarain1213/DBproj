@@ -31,7 +31,7 @@ public class Wenbenchuli {//只要用前四个  加一个返回高频词list的�
     public static Set<String> guli;//鼓励词库
     public static Set<String> wenda;//问答词库
     public Map<String, Integer> cipin;//统计词频
-    Wenbenchuli(){
+    public Wenbenchuli(){
         result=new ArrayList<>();
         wuru=new HashSet<>();
         guli=new HashSet<>();
