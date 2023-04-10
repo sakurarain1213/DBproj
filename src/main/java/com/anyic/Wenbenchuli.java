@@ -14,17 +14,32 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/*
+需要用到的函数：
+
+分析文本
+public void GetString_analyse2(String data,float time)
+
+获取高频词
+public List<String> Get_gaopinci(Integer number)
+
+所有的句子存在List<Sentence> Sens当中，Sentence结构见类Sentence
+ */
 public class Wenbenchuli {
 
+    //Sentence 类
     public class Sentence{
-        List<String> words;
-        boolean iswuru;//表示这句话是不是带有侮辱词,true表示有侮辱，flase表示没侮辱
-        int wuru_pos;
+        List<String> words;//存储句子的词
+        List<String> time;//表示Sentence的时间。大小为3，time.get(0)表示hour，time.get(1)表示min，time.get(2)表示sec
+        boolean iswuru;//表示这句话是不是侮辱,true表示有侮辱，flase表示没侮辱
+        boolean isguli;//true表示是鼓励，false表示不是
+        boolean istiwen;//同上，表示提问
+        int wuru_pos;//表示侮辱词的位置，在words中的下标
+
+
         String duixiang;//对象，表示这句话的对象，"0"表示对象不是学生，其它表示对象名
         String duixiang2;//2号对象，表示提问句中的对象
-        boolean isguli;//true表示是鼓励，false表示不是
-        List<String> time;//大小为3，time.get(0)表示hour，time.get(1)表示min，time.get(2)表示sec
-        boolean istiwen;//
         Sentence(){
             words=new ArrayList<>();
             iswuru=false;
@@ -39,7 +54,7 @@ public class Wenbenchuli {
         }
     }
     List<Sentence> Sens;//以句子为单位的list
-    private static String basePath="C:\\Users\\anyic\\IdeaProjects\\untitled2\\src";
+    private static String basePath="C:\\Users\\w1625\\Desktop\\hou_fin\\src\\main\\java\\com\\anyic";
     public int wuru_Count;//侮辱次数
     public int guli_Count;//鼓励次数
     public int wenda_Count;//提问次数
@@ -53,7 +68,7 @@ public class Wenbenchuli {
     public static Set<String> wenda;//问答词库
     public static Set<String> duixiang;//对象词库
     public Map<String, Integer> cipin;//统计词频
-    Wenbenchuli(){
+    public Wenbenchuli(){
         result=new ArrayList<>();
         Sens=new ArrayList<>();
         wuru=new HashSet<>();
@@ -110,11 +125,11 @@ public class Wenbenchuli {
     private void Load_dicts(String filename){
         Path path= Paths.get(basePath,"\\dicts\\",filename);
         WordDictionary.getInstance().loadUserDict(path);
-        wuru=readWordFile("src/dicts/wuru.txt");
-        guli=readWordFile("src/dicts/guli.txt");
-        wenda=readWordFile("src/dicts/wenda.txt");
-        stop_words=readWordFile("src/dicts/stop_words.txt");
-        duixiang=readWordFile("src/dicts/duixiang.txt");
+        wuru=readWordFile("src/main/java/com/anyic/dicts/wuru.txt");
+        guli=readWordFile("src/main/java/com/anyic/dicts/guli.txt");
+        wenda=readWordFile("src/main/java/com/anyic/dicts/wenda.txt");
+        stop_words=readWordFile("src/main/java/com/anyic/dicts/stop_words.txt");
+        duixiang=readWordFile("src/main/java/com/anyic/dicts/duixiang.txt");
     }
 
     //输出String中含有多少文字
@@ -325,6 +340,7 @@ public class Wenbenchuli {
         }
         return ans;
     }
+    //获得全部句子
     public List<Sentence> Get_AllSentences(){
         return Sens;
     }
