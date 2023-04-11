@@ -19,7 +19,7 @@ import java.util.Map;
 需要用到的函数：
 
 分析文本
-public void GetString_analyse2(String data,float time)
+public void GetString_analyse2(String data)
 
 获取高频词
 public List<String> Get_gaopinci(Integer number)
@@ -27,6 +27,7 @@ public List<String> Get_gaopinci(Integer number)
 所有的句子存在List<Sentence> Sens当中，Sentence结构见类Sentence
  */
 public class Wenbenchuli {
+
 
     //Sentence 类
     public class Sentence{
@@ -58,8 +59,8 @@ public class Wenbenchuli {
     public int wuru_Count;//侮辱次数
     public int guli_Count;//鼓励次数
     public int wenda_Count;//提问次数
-
     public float yusu;//语速
+    public int timelength;//文本时长                             *****
     public JiebaSegmenter segmenter;//jieba类
     public Set<String> stop_words;//停用词
     public List<String> result;//存储分词结果
@@ -82,6 +83,7 @@ public class Wenbenchuli {
         guli_Count=0;
         wenda_Count=0;
         yusu=0;
+        timelength=0;
     }
 
     //将Map按照value值排序，用于词频统计
@@ -161,7 +163,7 @@ public class Wenbenchuli {
             System.out.println(value);
         });
     }
-
+//仅做测试分句作用
     public void show_Sens(){
         for(Sentence s : Sens){
             System.out.println(s.words);
@@ -284,6 +286,11 @@ public class Wenbenchuli {
             }
         }
         //收尾工作
+
+        int hou_sec=3600*(Integer.parseInt(temptime.get(0))-Integer.parseInt(Sens.get(0).time.get(0)));
+        int min_sec=60*(  Integer.parseInt(temptime.get(1))-Integer.parseInt(Sens.get(0).time.get(1)));
+        int sec=          Integer.parseInt(temptime.get(2))-Integer.parseInt(Sens.get(0).time.get(2));
+        timelength=hou_sec+min_sec+sec;//计算文本时长。最终的时间会存在temptime中
         Sens.remove(Sens.size()-1);//删去无用的最后一个sentence
         cipin=sortMapByValues(cipin);//高频词排序
     }
@@ -321,11 +328,12 @@ public class Wenbenchuli {
 
 
     }
-    public void GetString_analyse2(String data,float time){
+    public void GetString_analyse2(String data){
         Load_dicts("dict.txt");
-        Get_yusu(data,time);
+
         result=segmenter.sentenceProcess(data);
         Fenju(result);
+        Get_yusu(data,timelength);
 
 
     }
