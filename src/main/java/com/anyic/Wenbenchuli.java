@@ -26,6 +26,10 @@ public void GetString_analyse2(String data)
 获取高频词
 public List<String> Get_gaopinci(Integer number)
 
+获取句子年月日时分秒(在Sentence类中)
+public String Get_Sentence_time()
+
+
 所有的句子存在List<Sentence> Sens当中，Sentence结构见类Sentence
  */
 public class Wenbenchuli {
