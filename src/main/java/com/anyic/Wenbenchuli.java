@@ -3,6 +3,8 @@ import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.WordDictionary;
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.io.BufferedReader;
@@ -53,6 +55,11 @@ public class Wenbenchuli {
             time.add("0");
             time.add("0");
         }
+
+        //获取sentence的年月日时分秒
+        public String Get_Sentence_time(){
+            return nianyueri+" "+time.get(0)+":"+time.get(1)+":"+time.get(2);
+        }
     }
     List<Sentence> Sens;//以句子为单位的list
     private static String basePath="C:\\Users\\w1625\\Desktop\\hou_fin\\src\\main\\java\\com\\anyic";
@@ -61,6 +68,7 @@ public class Wenbenchuli {
     public int wenda_Count;//提问次数
     public float yusu;//语速
     public int timelength;//文本时长                             *****
+    public String nianyueri;//表示文本年月日
     public JiebaSegmenter segmenter;//jieba类
     public Set<String> stop_words;//停用词
     public List<String> result;//存储分词结果
@@ -330,7 +338,9 @@ public class Wenbenchuli {
     }
     public void GetString_analyse2(String data){
         Load_dicts("dict.txt");
-
+        LocalDate date = LocalDate.now(); // get the current date
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        nianyueri=date.format(formatter);
         result=segmenter.sentenceProcess(data);
         Fenju(result);
         Get_yusu(data,timelength);
