@@ -38,7 +38,6 @@ import java.util.Date;
     "endTime":"2023-04-09 23:59:59"
 }
 
-
  */
 
 @Data
@@ -48,6 +47,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "record")
+//优化版本后  record表以句子为单位记录
 public class Record {
 
     private static final long serialVersionUID = 1L;
@@ -131,10 +131,10 @@ mysql可以存储Java对象。
 *
 * */
     /**
-     * 侮辱词个数
+     * 是否侮辱
      */
-    @TableField("wuruCount")
-    private Integer wuruCount;
+    @TableField("iswuru")
+    private Integer iswuru;
 
     /**
      * 具体
@@ -142,21 +142,22 @@ mysql可以存储Java对象。
     private String wuru;
 
     /**
-     * 鼓励词个数
+     * 是否鼓励
      */
-    @TableField("guliCount")
-    private Integer guliCount;
+    @TableField("isguli")
+    private Integer isguli;
 
     /**
      * 具体
      */
+
     private String guli;
 
     /**
-     * 提问词个数
+     * 是否提问
      */
-    @TableField("tiwenCount")
-    private Integer tiwenCount;
+    @TableField("istiwen")
+    private Integer istiwen;
 
     /**
      * 具体
@@ -164,13 +165,13 @@ mysql可以存储Java对象。
     private String tiwen;
 
     /**
-     * 语速
+     * 语速   无
      */
-    private Float yusu;
+   // private Float yusu;
 
     /**
-     * 高频词
+     * 换成ps  备注
      */
-    private String gaopin;
+    private String ps;
 
 }

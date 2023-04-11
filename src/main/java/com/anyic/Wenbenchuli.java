@@ -16,33 +16,65 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
 /*
-需要用到的函数：
-
 分析文本
+
 public void GetString_analyse2(String data)
 
 获取高频词
 public List<String> Get_gaopinci(Integer number)
+所有的句子存在List<Sentence> Sens当中，Sentence结构见类Sentence
 
 获取句子年月日时分秒(在Sentence类中)
 public String Get_Sentence_time()
 
 
-所有的句子存在List<Sentence> Sens当中，Sentence结构见类Sentence
+传入n行句子的整体
+
+analyze2返回的属性
+List<Sentence> Sens;//以句子为单位的list
+        {
+            具体的
+             List<String> words;词
+        List<String> time;//表示Sentence的时间 time.get(0)表示hour，time.get(1)表示min，time.get(2)表示sec
+        iswuru;//表示这句话是不是侮辱,true表示有侮辱，flase表示没侮辱
+        isguli;//true表示是鼓励，false表示不是
+        istiwen;//同上，表示提问
+        int wuru_pos;//表示侮辱词的位置，在words中的下标
+
+        //String duixiang;//对象，表示这句话的对象，"0"表示对象不是学生，其它表示对象名
+        //String duixiang2;//2号对象，表示提问句中的对象
+        }
+
+单独写一个service  用于整体处理
+    高频词
+    语速
+int wuru_Count;//侮辱次数   原子化 可以由句子相加得到  下面同理
+int guli_Count;//鼓励次数
+int wenda_Count;//提问次数
+
+
+
+
+
+ */
+
+
+
+/*
+
  */
 public class Wenbenchuli {
 
 
     //Sentence 类
     public class Sentence{
-        List<String> words;//存储句子的词
-        List<String> time;//表示Sentence的时间。大小为3，time.get(0)表示hour，time.get(1)表示min，time.get(2)表示sec
-        boolean iswuru;//表示这句话是不是侮辱,true表示有侮辱，flase表示没侮辱
-        boolean isguli;//true表示是鼓励，false表示不是
-        boolean istiwen;//同上，表示提问
-        int wuru_pos;//表示侮辱词的位置，在words中的下标
+        public List<String> words;//存储句子的词
+        public List<String> time;//表示Sentence的时间。大小为3，time.get(0)表示hour，time.get(1)表示min，time.get(2)表示sec
+        public boolean iswuru;//表示这句话是不是侮辱,true表示有侮辱，flase表示没侮辱
+        public boolean isguli;//true表示是鼓励，false表示不是
+        public boolean istiwen;//同上，表示提问
+        public int wuru_pos;//表示侮辱词的位置，在words中的下标
 
 
         String duixiang;//对象，表示这句话的对象，"0"表示对象不是学生，其它表示对象名
@@ -65,13 +97,13 @@ public class Wenbenchuli {
             return nianyueri+" "+time.get(0)+":"+time.get(1)+":"+time.get(2);
         }
     }
-    List<Sentence> Sens;//以句子为单位的list
+    ArrayList<Sentence> Sens;//以句子为单位的list
     private static String basePath="C:\\Users\\w1625\\Desktop\\hou_fin\\src\\main\\java\\com\\anyic";
     public int wuru_Count;//侮辱次数
     public int guli_Count;//鼓励次数
     public int wenda_Count;//提问次数
     public float yusu;//语速
-    public int timelength;//文本时长                             *****
+    public int timelength;//文本时长             *****
     public String nianyueri;//表示文本年月日
     public JiebaSegmenter segmenter;//jieba类
     public Set<String> stop_words;//停用词
@@ -363,7 +395,7 @@ public class Wenbenchuli {
         return ans;
     }
     //获得全部句子
-    public List<Sentence> Get_AllSentences(){
+    public ArrayList<Sentence> Get_AllSentences(){
         return Sens;
     }
 }

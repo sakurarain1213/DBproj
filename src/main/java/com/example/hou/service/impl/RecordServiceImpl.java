@@ -1,5 +1,6 @@
 package com.example.hou.service.impl;
 
+import com.anyic.Wenbenchuli;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,8 +12,12 @@ import com.example.hou.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.anyic.Wenbenchuli.Sentence;
 import com.anyic.Wenbenchuli;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,37 +44,77 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
         //疯狂debug
 
 
-        if (record.getTxtFile()==null) {
+        if (record.getTxtFile()==null) {//现在拿的是整体
             //System.out.println(record.getTxtFile()+"?????????");//测试语句
              return "缺少文本信息";
-        } else if (record.getEndTime()==null) {
-            return "缺少时间信息";
+        } //else if (record.getEndTime()==null) {
+          //  return "缺少时间信息";//时间交给每句话处理
+        //}
+        else if(record.getUsername()==null){
+            return "缺少用户信息";
         }
         else{
             /***********************************************************
-             开始连接自定义评分标准类
+             开始分割文本 连接句子表
              */
 
             String test=record.getTxtFile();
             //时间差要以分钟为单位的float   gettime方法返回ms
-            float deltaTime=(record.getEndTime().getTime()-record.getStartTime().getTime());
-            deltaTime=deltaTime/1000/60;//ms转minute
+           // float deltaTime=(record.getEndTime().getTime()-record.getStartTime().getTime());
+            //deltaTime=deltaTime/1000/60;//ms转minute
 
             Wenbenchuli W=new Wenbenchuli();
-            W.GetString_analyse(test,deltaTime);
+            W.GetString_analyse2(test);//改一下对应的文本分析
+            ArrayList<Sentence> s=W.Get_AllSentences();
 
-            record.setWuruCount(W.wuru_Count);
-            record.setGuliCount(W.guli_Count);
-            record.setTiwenCount(W.wenda_Count);
-            record.setYusu(W.yusu);
+            Record r=new Record();//临时插入变量
 
+            //时间格式转化
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //进行遍历
+
+
+
+            for (Sentence each : s) {
+
+                //临时词listt   用下标返回侮辱词
+                String word=each.words.get(each.wuru_pos);
+                r.setIswuru((each.iswuru)?1:0);//boolean转int
+                r.setIstiwen((each.istiwen)?1:0);
+                r.setIsguli((each.isguli)?1:0);
+
+                //先判是不是侮辱
+                if(r.getIswuru()==1)
+                {r.setWuru(word);}//一个侮辱词
+                else {
+                    r.setWuru(null);
+                }
+                try {
+                    r.setStartTime(simpleDateFormat.parse(each.Get_Sentence_time()));//时间格式转化 强制要求异常提醒
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                //将list words拼成句子再存进表
+                String ju="";
+                for(String fenci :each.words)
+                {ju=ju+fenci;}
+                r.setTxtFile(ju);
+
+                //别忘记用户名
+                r.setUsername(record.getUsername());
+                recordMapper.insert(r);
+
+            }
+
+           // record.setYusu(W.yusu);  没有语速
+           // W.
             //由于高频词返回一个list string  直接拼成一个大string即可
-            String gao=String.join(",", W.Get_gaopinci(5));
-            record.setGaopin(gao);//默认返回前五大高频词
+            //String gao=String.join(",", W.Get_gaopinci(5));
+           // record.setGaopin(gao);//默认返回前五大高频词
       /*******
        * 结束调用
        * ***/
-            recordMapper.insert(record);
             return "SUCCESS";
         }
 
@@ -108,11 +153,13 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
                return null;
            }
         //尝试用wrapper 实现SQL的等于 介于 大 小  筛选 合并 查询
+
         QueryWrapper<Record> qw = new QueryWrapper<>();
         qw
                 .eq("username",user)
-                .between("end_time",time1,time2)
-                .orderByDesc("end_time")//asc desc 升降序
+                .eq("iswuru",1)  //加一个筛选侮辱词的接口
+                .between("start_time",time1,time2)
+                .orderByDesc("start_time")//asc desc 升降序
         ;
         //然后得到记录行
         List<Record> l = recordMapper.selectList(qw);
