@@ -1,5 +1,3 @@
-package com.example.hou.mapper;
-
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

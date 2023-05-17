@@ -28,16 +28,21 @@ public  class Flight  {
 
     private String airline;
 
+    @TableId(value = "dep_airport")
     private String depAirport;
 
+    @TableId(value = "arr_airport")
     private String arrAirport;
 
+    @TableId(value = "dep_time")
     private Date depTime;
 
+    @TableId(value = "arr_time")
     private Date arrTime;
 
     private BigDecimal price;
 
+    @TableId(value = "available_seats")
     private Integer availableSeats;
 
 

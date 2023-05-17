@@ -27,6 +27,7 @@ public  class Book {
     @TableId(value = "user_id", type = IdType.AUTO)
     private String userId;
 
+    @TableId(value = "flight_id")
     private String flightId;
 
     private Date date;
