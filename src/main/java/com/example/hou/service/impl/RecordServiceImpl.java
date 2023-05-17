@@ -1,23 +1,15 @@
 package com.example.hou.service.impl;
 
-import com.anyic.Wenbenchuli;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.hou.entity.Record;
-import com.example.hou.entity.UserInfo;
+import com.example.hou.entity.ExampleRecord;
+
 import com.example.hou.mapper.RecordMapper;
-import com.example.hou.mapper.UserInfoMapper;
 import com.example.hou.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.anyic.Wenbenchuli.Sentence;
-import com.anyic.Wenbenchuli;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,20 +29,20 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
 
 
     @Override
-    public String recordAddService(Record record){
+    public String recordAddService(ExampleRecord exampleRecord){
 
         //username   txt   start +end  time
         //add的时候不用判断已存在的教师记录 但是要判断非空
         //疯狂debug
 
 
-        if (record.getTxtFile()==null) {//现在拿的是整体
+        if (exampleRecord.getTxtFile()==null) {//现在拿的是整体
             //System.out.println(record.getTxtFile()+"?????????");//测试语句
              return "缺少文本信息";
         } //else if (record.getEndTime()==null) {
           //  return "缺少时间信息";//时间交给每句话处理
         //}
-        else if(record.getUsername()==null){
+        else if(exampleRecord.getUsername()==null){
             return "缺少用户信息";
         }
         else{
@@ -58,16 +50,12 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
              开始分割文本 连接句子表
              */
 
-            String test=record.getTxtFile();
+            String test= exampleRecord.getTxtFile();
             //时间差要以分钟为单位的float   gettime方法返回ms
            // float deltaTime=(record.getEndTime().getTime()-record.getStartTime().getTime());
             //deltaTime=deltaTime/1000/60;//ms转minute
 
-            Wenbenchuli W=new Wenbenchuli();
-            W.GetString_analyse2(test);//改一下对应的文本分析
-            ArrayList<Sentence> s=W.Get_AllSentences();
-
-            Record r=new Record();//临时插入变量
+            ExampleRecord r=new ExampleRecord();//临时插入变量
 
             //时间格式转化
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -75,37 +63,7 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
 
 
 
-            for (Sentence each : s) {
 
-                //临时词listt   用下标返回侮辱词
-                String word=each.words.get(each.wuru_pos);
-                r.setIswuru((each.iswuru)?1:0);//boolean转int
-                r.setIstiwen((each.istiwen)?1:0);
-                r.setIsguli((each.isguli)?1:0);
-
-                //先判是不是侮辱
-                if(r.getIswuru()==1)
-                {r.setWuru(word);}//一个侮辱词
-                else {
-                    r.setWuru(null);
-                }
-                try {
-                    r.setStartTime(simpleDateFormat.parse(each.Get_Sentence_time()));//时间格式转化 强制要求异常提醒
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-
-                //将list words拼成句子再存进表
-                String ju="";
-                for(String fenci :each.words)
-                {ju=ju+fenci;}
-                r.setTxtFile(ju);
-
-                //别忘记用户名
-                r.setUsername(record.getUsername());
-                recordMapper.insert(r);
-
-            }
 
            // record.setYusu(W.yusu);  没有语速
            // W.
@@ -131,10 +89,10 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
 
     @Override//通过时间范围和username拿语音记录
     //查询 应该返回对象List 而不再是string
-    public List<Record> recordGetService(Record record) {//传入的前端请求对象
-           Date time1=record.getStartTime(); // 考虑要不要tostring
-           Date time2=record.getEndTime(); // 考虑要不要tostring
-           String user=record.getUsername();
+    public List<ExampleRecord> recordGetService(ExampleRecord exampleRecord) {//传入的前端请求对象
+           Date time1= exampleRecord.getStartTime(); // 考虑要不要tostring
+           Date time2= exampleRecord.getEndTime(); // 考虑要不要tostring
+           String user= exampleRecord.getUsername();
        //因为有可能为空 所以要返回临时的量
        // List<Record> t;
        // Record temp = new Record();
@@ -154,7 +112,7 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
            }
         //尝试用wrapper 实现SQL的等于 介于 大 小  筛选 合并 查询
 
-        QueryWrapper<Record> qw = new QueryWrapper<>();
+        QueryWrapper<ExampleRecord> qw = new QueryWrapper<>();
         qw
                 .eq("username",user)
                 .eq("iswuru",1)  //加一个筛选侮辱词的接口
@@ -162,7 +120,7 @@ public class RecordServiceImpl /*extends ServiceImpl<RecordMapper, Record> */imp
                 .orderByDesc("start_time")//asc desc 升降序
         ;
         //然后得到记录行
-        List<Record> l = recordMapper.selectList(qw);
+        List<ExampleRecord> l = recordMapper.selectList(qw);
             //l==null 表示查询结果为空
             //test
             return l;

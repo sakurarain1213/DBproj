@@ -3,10 +3,10 @@ server:
 #防止8080和8081冲突
 
 spring:
-
+#在问号位置修改数据库的名字
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sc?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
     username: root
     password: 123456
   mvc:

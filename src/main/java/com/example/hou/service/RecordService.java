@@ -1,8 +1,6 @@
 package com.example.hou.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.hou.entity.Record;
-import com.example.hou.entity.UserInfo;
+import com.example.hou.entity.ExampleRecord;
 
 import java.util.List;
 
@@ -30,8 +28,8 @@ public interface RecordService /*extends IService<Record> */{
         录音备份：将录音文件备份到指定的存储设备中，确保数据的安全性和可靠性。
  */
 
-    public String recordAddService(Record record);
+    public String recordAddService(ExampleRecord exampleRecord);
 
-    public List<Record> recordGetService(Record record);
+    public List<ExampleRecord> recordGetService(ExampleRecord exampleRecord);
 
 }

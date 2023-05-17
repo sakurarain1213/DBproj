@@ -1,12 +1,11 @@
 package com.example.hou.controller;
 
 
-import com.example.hou.entity.Record;
-import com.example.hou.entity.UserInfo;
+import com.example.hou.entity.ExampleRecord;
+
 import com.example.hou.result.Result;
 import com.example.hou.result.ResultUtil;
 import com.example.hou.service.RecordService;
-import com.example.hou.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +31,8 @@ public class RecordController {
     RecordService recordService;//不要忘记注入
 
     @RequestMapping("/add")
-    public Result recordAdd(@RequestBody Record record) {
-        String msg = recordService.recordAddService(record);
+    public Result recordAdd(@RequestBody ExampleRecord exampleRecord) {
+        String msg = recordService.recordAddService(exampleRecord);
         if (("SUCCESS").equals(msg)) {
             return ResultUtil.success("语音文本上传成功");
         } else {
@@ -44,8 +43,8 @@ public class RecordController {
 
     @RequestMapping("/get")
     //因为返回的是一个list  所以消息需要根据新的格式自定义
-    public Result recordGet(@RequestBody Record record) {
-        List<Record> l = recordService.recordGetService(record);
+    public Result recordGet(@RequestBody ExampleRecord exampleRecord) {
+        List<ExampleRecord> l = recordService.recordGetService(exampleRecord);
         if (l.size()>0) {
             return ResultUtil.success(l);//强大的result类可以自定义返回类型
         }

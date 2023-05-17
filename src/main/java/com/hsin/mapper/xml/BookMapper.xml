@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsin.mapper.BookMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.hou.entity.Book">
+        <id column="user_id" property="userId" />
+        <result column="ordernum" property="ordernum" />
+        <result column="flight_id" property="flightId" />
+        <result column="date" property="date" />
+        <result column="seatnum" property="seatnum" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ordernum, user_id, flight_id, date, seatnum
+    </sql>
+
+</mapper>

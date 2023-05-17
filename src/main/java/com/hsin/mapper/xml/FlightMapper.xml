@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsin.mapper.FlightMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.hou.entity.Flight">
+        <id column="ID" property="id" />
+        <result column="airline" property="airline" />
+        <result column="dep_airport" property="depAirport" />
+        <result column="arr_airport" property="arrAirport" />
+        <result column="dep_time" property="depTime" />
+        <result column="arr_time" property="arrTime" />
+        <result column="price" property="price" />
+        <result column="available_seats" property="availableSeats" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, airline, dep_airport, arr_airport, dep_time, arr_time, price, available_seats
+    </sql>
+
+</mapper>

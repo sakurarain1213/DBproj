@@ -7,12 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -48,7 +45,7 @@ import java.util.Date;
 @NoArgsConstructor
 @TableName(value = "record")
 //优化版本后  record表以句子为单位记录
-public class Record {
+public class ExampleRecord {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,11 +60,13 @@ public class Record {
      */
     @TableField("lesson_id")
     private Integer lessonId;
-
+    /**
+     * 开始时间（不用时间戳因为有2038问题）
+     */
     /*
     操作简化 只让人和记录直接关联  不要通过课程表了
      */
-   private String username;//!!!!!!!!!!!degub
+    private String username;//!!!!!!!!!!!degub
 
 
     /**
@@ -96,7 +95,7 @@ public class Record {
      * 结束时间
      */
     // 前端需要传这种格式的字符串
-   //@DateTimeFormat是前端往后段传的时候使用，加在实体类中，然后controller中直接使用这个实体类接收参数。当前端传固定格式的字符串的时候会转换成date
+    //@DateTimeFormat是前端往后段传的时候使用，加在实体类中，然后controller中直接使用这个实体类接收参数。当前端传固定格式的字符串的时候会转换成date
     //@JsonFormat是后端往前端传输的时候使用。
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -112,7 +111,8 @@ public class Record {
     private String score;//备注  json在实体类里还是用string  但是需要注解  现在尝试直接存一个对象
 
 /*
-*     Fastjson 是阿里巴巴提供的一个Java语言编写的高性能功能完善的 JSON 库，是目前Java语言中最快的 JSON 库，可以实现 Java 对象和 JSON 字符串的相互转换。
+
+    Fastjson 是阿里巴巴提供的一个Java语言编写的高性能功能完善的 JSON 库，是目前Java语言中最快的 JSON 库，可以实现 Java 对象和 JSON 字符串的相互转换。
       序列化： 将 集合数据转换为 json 数据；
      反序列化：将  json 数据转换为 Java 对象。
       java中如需返回JSON数据需要第三方jar包 ：例：  ①:jsonlib   ②: jackson  ③: fastjson(阿里巴巴)  ④:gson(谷歌)
@@ -128,50 +128,122 @@ mysql可以存储Java对象。
 缺点：不方便检索内容，需要提前估计JSON字符串大小。
 场景：适合不需要检索，只用查询和存储展示。
 这里选择直接开多一点的列
-*
-* */
-    /**
-     * 是否侮辱
-     */
-    @TableField("iswuru")
-    private Integer iswuru;
 
-    /**
-     * 具体
-     */
-    private String wuru;
 
-    /**
-     * 是否鼓励
-     */
-    @TableField("isguli")
-    private Integer isguli;
 
-    /**
-     * 具体
-     */
 
-    private String guli;
+/*
 
-    /**
-     * 是否提问
-     */
-    @TableField("istiwen")
-    private Integer istiwen;
-
-    /**
-     * 具体
-     */
-    private String tiwen;
-
-    /**
-     * 语速   无
-     */
-   // private Float yusu;
-
-    /**
-     * 换成ps  备注
-     */
-    private String ps;
-
+上传格式
+json
+{
+    "username":"1",
+    "password":"123"
 }
+
+ */
+
+
+    @Data//@Data 就是lombok 的注解 自动生成了set get
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @TableName(value = "user_info")  //@TableName 对应数据库表名
+    public class UserInfo {
+
+        //重要！！！实践证明 直接在mysql数据库增加列（允许null）
+        // 不在entity和后端代码作修改 依然正常运行
+
+        /*public UserInfo(Integer id, String username, String password){
+             this.username = username;
+             this.id = id;
+             this.password = password;
+
+         }
+        @TableId(value = "user_id",type = IdType.AUTO)  //@TableId 说明这条数据自增长也是对应数据库自增长的
+        private Integer id;
+        @TableField("username")//这里和数据库表对应  不写注解的话 属性名就就要完全对应数据库列名
+        private String username;
+        @TableField("password")
+        private String password;
+        //private LocalDateTime createTime;
+
+
+        //再加一些列
+        *
+         * 电话号码
+
+        //@TableField(strategy = FieldStrategy.IGNORED)//即允许空
+        private String phone;
+
+
+       **
+         * 电子邮箱
+
+        private String email;
+
+        /**
+         * 性别:men women
+
+        private String gender;
+
+        *
+         * 头像
+
+        private Blob avatar;//测试一下 不存路径（string） 直接存blob的格式   写一个update方法在service就行
+    }
+
+
+
+
+
+*/
+        /**
+         * 是否侮辱
+         */
+        @TableField("iswuru")
+        private Integer iswuru;
+
+        /**
+         * 具体
+         */
+        private String wuru;
+
+        /**
+         * 是否鼓励
+         */
+        @TableField("isguli")
+        private Integer isguli;
+
+        /**
+         * 具体
+         */
+
+        private String guli;
+
+        /**
+         * 是否提问
+         */
+        @TableField("istiwen")
+        private Integer istiwen;
+
+        /**
+         * 具体
+         */
+        private String tiwen;
+
+        /**
+         * 语速   无
+         */
+        // private Float yusu;
+
+        /**
+         * 换成ps  备注
+         */
+        private String ps;
+
+
+    }
+}
+
+
