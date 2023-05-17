@@ -1,6 +1,6 @@
-package com.hsin.mapper;
+package com.example.hou.mapper;
 
-import com.example.hou.entity.Book;
+import com.example.hou.entity.Airport;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author hsin
  * @since 2023-05-17
  */
-public interface BookMapper extends BaseMapper<Book> {
+public interface AirportMapper extends BaseMapper<Airport> {
 
 }

@@ -12,7 +12,7 @@ spring:
   mvc:
     format:
       date: yyyy-MM-dd HH:mm:ss
-#我们可以直接在配置文件中统一配置时间格式
+#可以直接在配置文件中统一配置时间格式
   freemarker:
     cache: false
 #showSql

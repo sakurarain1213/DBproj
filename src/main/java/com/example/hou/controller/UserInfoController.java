@@ -2,10 +2,10 @@ package com.example.hou.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.example.hou.entity.UserInfo;
+
 import com.example.hou.result.Result;
 import com.example.hou.result.ResultUtil;
-import com.example.hou.service.UserInfoService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@SuppressWarnings({"all"}) //控制台输出过滤掉警告信息
-@RestController//控制层标志，等价于@Controller+@ResponseBody
-@Slf4j//lombok用于日志输出
-@RequestMapping("/userInfo")//这里是浏览器8080后的地址 也就是对外接口地址
 
-public class UserInfoController {
-    @Autowired
-    UserInfoService userInfoService;
+//public class UserInfoController {
+  //  @Autowired
+   // UserInfoService userInfoService;
     //添加@ResponseBody注解将返回的数据自动转化为json, @RequestBody将接收的数据转化为json
-    @RequestMapping("/login")
+  //  @RequestMapping("/login")
 //@ResponseBody//重点debug区域  即只能在params不能在body传递json的问题  这一行无所谓
     //下面把requestbody删除 则至少用params可以 这个符合简单教程
-   public Result login(@RequestBody UserInfo userInfo) {
-       String msg = userInfoService.loginService(userInfo);
-        if (("SUCCESS").equals(msg)) {
-            return ResultUtil.success("登录成功");
-        } else {
-            return ResultUtil.error(msg);
-        }
-    }
+  // public Result login(@RequestBody UserInfo userInfo) {
+   //    String msg = userInfoService.loginService(userInfo);
+    //    if (("SUCCESS").equals(msg)) {
+   //         return ResultUtil.success("登录成功");
+   //     } else {
+   //         return ResultUtil.error(msg);
+   //     }
+   // }
     /*   登录用string的版本  作为参考 最好全用对象
       public Result login(/*@RequestBody UserInfo userInfo String username,/*@RequestParam String password) {
         String msg = userInfoService.loginService(username,password);
@@ -82,6 +78,7 @@ public class UserInfoController {
     不会执行方法。只能输入localhost:8080/userInfo/login?username=xxx&password=XXX 才能执行相应的方法*/
     //添加@ResponseBody注解将返回的数据自动转化为json, @RequestBody将接收的数据转化为json
 //重点debug  这边是可以用json传递的
+/*
     @RequestMapping("/register")
     public Result register(@RequestBody UserInfo userInfo) {
         String msg = userInfoService.registerService(userInfo);
@@ -98,7 +95,7 @@ public class UserInfoController {
         if (("SUCCESS").equals(msg)) {
             return ResultUtil.success("修改成功");}
         else{ return ResultUtil.error(msg);}
-    }
+    }*/
       /*
     @RequestMapping("/register")
     @ResponseBody
@@ -153,4 +150,90 @@ public class UserInfoController {
         return userInfoService.selectAll();
     }
 */
+
+
+
+
+
+
+
+
+
+
+
+
+/*通用样例
+
+@RestController
+@Slf4j
+@RequestMapping("/lesson")
+public class LessonController {
+
 }
+
+
+
+
+
+
+
+
+
+@RestController
+@Slf4j
+@RequestMapping("/record")
+public class RecordController {
+
+    @Autowired
+    RecordService recordService;//不要忘记注入
+
+    @RequestMapping("/add")
+    public Result recordAdd(@RequestBody ExampleRecord exampleRecord) {
+        String msg = recordService.recordAddService(exampleRecord);
+        if (("SUCCESS").equals(msg)) {
+            return ResultUtil.success("语音文本上传成功");
+        } else {
+            return ResultUtil.error(msg);
+        }
+    }
+
+
+    @RequestMapping("/get")
+    //因为返回的是一个list  所以消息需要根据新的格式自定义
+    public Result recordGet(@RequestBody ExampleRecord exampleRecord) {
+        List<ExampleRecord> l = recordService.recordGetService(exampleRecord);
+        if (l.size()>0) {
+            return ResultUtil.success(l);//强大的result类可以自定义返回类型
+        }
+        else {
+            return ResultUtil.error("缺少查询条件或查询结果为空");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
-package com.hsin.service;
+package com.example.hou.service;
 
-import com.example.hou.entity.Airport;
+import com.example.hou.entity.Flight;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author hsin
  * @since 2023-05-17
  */
-public interface AirportService extends IService<Airport> {
+public interface FlightService {
 
 }

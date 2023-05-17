@@ -26,6 +26,33 @@ public interface RecordService /*extends IService<Record> */{
 录音转写：将录音文件转写成文字文件或文本信息。这个在前端完成
 
         录音备份：将录音文件备份到指定的存储设备中，确保数据的安全性和可靠性。
+
+
+    package com.example.hou.service;
+
+
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.hou.entity.UserInfo;
+
+
+
+public interface UserInfoService /*extends IService<UserInfo> {
+
+    public String loginService(UserInfo user);
+
+    public String registerService(UserInfo user);
+
+    public String updateService(UserInfo user);
+
+
+}
+
+
+
+
+
+
  */
 
     public String recordAddService(ExampleRecord exampleRecord);
