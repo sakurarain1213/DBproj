@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
+    User searchBySfz (String the_sfz_of_user);
 }

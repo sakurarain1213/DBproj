@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService {
 
+    public String loginService(User user);
+
+    public String registerService(User user);
+
 }

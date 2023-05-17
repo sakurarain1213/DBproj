@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hou.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.hou.entity.User">
+        <id column="sfz" property="sfz" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="age" property="age" />
+        <result column="phonenum" property="phonenum" />
+        <result column="password" property="password" />
+        <result column="access" property="access" />
+    </resultMap>
+
+    <select id="searchBySfz" resultType="com.example.hou.entity.User">
+        select *
+        from user
+        where sfz = #{sfz}
+    </select>
+
+
+
+</mapper>

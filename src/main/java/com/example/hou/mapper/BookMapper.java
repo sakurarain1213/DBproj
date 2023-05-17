@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
 
+    Book searchByOrdernum (String the_Ordernum);
 }

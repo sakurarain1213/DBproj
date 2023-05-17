@@ -23,8 +23,8 @@ public  class User {
     /**
      * 用户主键 这里为了简便即身份证
      */
-    @TableId(value = "ID", type = IdType.AUTO)
-    private String id;
+    @TableId(value = "sfz", type = IdType.AUTO)
+    private String sfz;
 
     private String name;
 

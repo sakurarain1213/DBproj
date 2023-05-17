@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface FlightMapper extends BaseMapper<Flight> {
 
+    Flight searchByID (String the_flight_id);
 }
