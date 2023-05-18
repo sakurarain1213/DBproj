@@ -23,7 +23,9 @@ public  class User {
     /**
      * 用户主键 这里为了简便即身份证
      */
-    @TableId(value = "sfz", type = IdType.AUTO)
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     private String sfz;
 
     private String name;
@@ -40,4 +42,6 @@ public  class User {
      * 管理员权限
      */
     private Integer access;
+
+
 }

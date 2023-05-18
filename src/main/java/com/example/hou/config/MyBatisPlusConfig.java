@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @MapperScan("com.example.hou.mapper")//mapper接口扫描注解
 @EnableTransactionManagement
-public class MyBatisPlusConfig {//分页配置,本博客不展示分页操作
+public class MyBatisPlusConfig {//分页配置,但是不展示分页操作
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();

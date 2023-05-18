@@ -4,6 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.hou.entity.User">
+        <id column="id" property="id" />
         <id column="sfz" property="sfz" />
         <result column="name" property="name" />
         <result column="sex" property="sex" />

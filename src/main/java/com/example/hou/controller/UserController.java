@@ -15,14 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 /*
 测试接口
-
+登录
+localhost:8080/user/login
 {
-    "ID":"157347196610093469",
+    "sfz":"157347196610093469",
     "password":"123"
 }
 
+注册
+localhost:8080/user/register
+{
+    "sfz":"157347196610093469",
+    "password":"123"
+}
 
-
+更新
+localhost:8080/user/update
+{
+    "sfz":"123456789012345677",
+    "password":"123Q!1234",
+    "phonenum":"15757106037",
+    "name":"张三"
+}
 
  */
 
@@ -57,6 +71,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/update")
+    public Result update(@RequestBody User user) {
+        String msg = userService.updateService(user);
+        if (("SUCCESS").equals(msg)) {
+            return ResultUtil.success("用户信息更新成功");
+        } else {
+            return ResultUtil.error(msg);
+        }
+    }
 
 
 
