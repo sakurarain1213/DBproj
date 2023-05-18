@@ -1,20 +1,21 @@
 
 数据库系统的课程项目  
 ========================
-（后端 历时一天零半个月搞得差不多了）
+（后端 历时一天零**半个月**搞得差不多了）
 # Introduction - 介绍
 Summary - 概要   目录结构不完整 先不放
 
 *springboot*+*mybatisplus*+*Mysql  *
 用**postman**测试接口  
 `~写表过程：entity层 service层(impl实现层)  （mapper层可不写）  controller层   测试`
-Features - 特性  特有的优美
+Features - 特性  
+特有的优美
 Requirements - 必要条件（环境，对所有项目，和所有子模块和库的描述。）  
 Matlab  
 
 # Configuration - 配置（配置信息。）
-Installation - 安装（如何安装。）    
-Usage - 用法（用法。）    
+Installation - 安装
+Usage - 用法   
 ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖  
 在yml配置文件里更改本地数据库连接 启动Application.java即可  
 
