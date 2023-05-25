@@ -29,4 +29,7 @@ public class Airport {
 
     private String city;
 
+    private String code;
+    private String terminal;
+    private String country;
 }

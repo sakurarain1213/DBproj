@@ -34,5 +34,7 @@ public  class Book {
 
     private Integer seatnum;
 
+    private String service;
+
 
 }

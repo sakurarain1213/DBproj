@@ -9,11 +9,13 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @AllArgsConstructor
@@ -28,22 +30,27 @@ public  class Flight  {
 
     private String airline;
 
-    @TableId(value = "dep_airport")
+    @TableId(value = "depAirport")
     private String depAirport;
 
-    @TableId(value = "arr_airport")
+    @TableId(value = "arrAirport")
     private String arrAirport;
 
-    @TableId(value = "dep_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableId(value = "depTime")
     private Date depTime;
 
-    @TableId(value = "arr_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableId(value = "arrTime")
     private Date arrTime;
 
-    private BigDecimal price;
+    private float price;
 
-    @TableId(value = "available_seats")
+    @TableId(value = "availableSeats")
     private Integer availableSeats;
 
+    private String model;
 
 }
