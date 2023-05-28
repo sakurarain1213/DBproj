@@ -55,7 +55,13 @@ public class FlightController {
     public Result getflight(@RequestBody Flight flight) {
         List<Flight> l = flightService.getFlightService(flight);
         if (l.size()>0) {
-            return ResultUtil.success(l);
+
+            //相当于重新打开了ResultUtil的封装  自定义返回消息也在返回类的属性位置编辑
+            Result r=new Result();
+            r.setCode(200);
+            r.setMsg("成功查询到记录数量："+l.size());
+            r.setData(l);
+            return r;
         }
         else {
             return ResultUtil.error("缺少查询条件或查询结果为空");

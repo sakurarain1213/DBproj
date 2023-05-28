@@ -93,7 +93,10 @@ public class FlightServiceImpl implements FlightService {
             }
         }
 
-        //然后可以查询其它信息 再返回
+        //然后可以查询其它信息 再返回   也可以按照特定规则排序
+        q.orderByAsc("depTime");
+
+        //测试传入任意值
 
         List<Flight> l = flightMapper.selectList(q);
         return l;
