@@ -111,13 +111,14 @@ public class UserServiceImpl  implements UserService {
     }
     @Override
     public String updateService(User user) {
-        User userDB = userMapper.searchBySfz(user.getSfz());
-
+        //User userDB = userMapper.searchBySfz(user.getSfz());
+        //一定要传入身份证作为ID
         User temp = new User();
-        //修改内容  可以是密码   因为没有接入公安系统 所以也可以是姓名
+        //修改内容  可以部分为空 可以是密码   因为没有接入公安系统 所以也可以是姓名
         temp.setPassword(encrypt3ToMD5(user.getPassword()));
         temp.setPhonenum(user.getPhonenum());
         temp.setName(user.getName());
+        //temp.setAge(user.getAge()); 年龄是自动算的
         //查询  条件构造器
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
         userUpdateWrapper.eq("sfz", user.getSfz());

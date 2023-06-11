@@ -23,6 +23,10 @@ import java.util.List;
     "id":"4CV36R0G"
 }
 
+因为mapper 没有写id的SQL 现在不可用！！！
+
+
+
 机票查询
 localhost:8080/flight/get
 {

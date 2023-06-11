@@ -3,7 +3,81 @@
 ========================
 （后端 历时一天零**半个月**搞得差不多了）
 # Introduction - 介绍
-Summary - 概要   目录结构不完整 先不放
+Summary - 概要     tree 项目硬盘地址 /f > 树状图输出地址result.txt   即可
+DBproj  主要目录结构和介绍
+
+│  pom.xml     在这里管理依赖仓库
+│  README.md
+│
+├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─com
+│  │  │      ├─example
+│  │  │      │  └─hou
+│  │  │      │      │  HouApplication.java      启动类
+│  │  │      │      │
+│  │  │      │      │      
+│  │  │      │      ├─controller                    前端交互第一层接口
+│  │  │      │      │      AirportController.java
+│  │  │      │      │      BookController.java
+│  │  │      │      │      FlightController.java
+│  │  │      │      │      UserController.java
+│  │  │      │      │      UserInfoController.java
+│  │  │      │      │      
+│  │  │      │      ├─entity                          实体类 静态DB表类
+│  │  │      │      │      Airport.java
+│  │  │      │      │      Book.java
+│  │  │      │      │      ExampleRecord.java
+│  │  │      │      │      Flight.java
+│  │  │      │      │      User.java
+│  │  │      │      │      
+│  │  │      │      ├─mapper                         形参mapper 可以不写
+│  │  │      │      │      AirportMapper.java
+│  │  │      │      │      BookMapper.java
+│  │  │      │      │      FlightMapper.java
+│  │  │      │      │      UserInfoMapper.java
+│  │  │      │      │      UserMapper.java
+│  │  │      │      │      
+│  │  │      │      ├─result                         返回模板类
+│  │  │      │      │      Result.java
+│  │  │      │      │      ResultCode.java
+│  │  │      │      │      ResultUtil.java
+│  │  │      │      │      
+│  │  │      │      └─service                         第二层接口类
+│  │  │      │          │  AirportService.java
+│  │  │      │          │  BookService.java
+│  │  │      │          │  FlightService.java
+│  │  │      │          │  RecordService.java
+│  │  │      │          │  UserService.java
+│  │  │      │          │  
+│  │  │      │          └─impl                        末端具体实现类
+│  │  │      │                  AirportServiceImpl.java
+│  │  │      │                  BookServiceImpl.java
+│  │  │      │                  CheckPassword.java
+│  │  │      │                  FlightServiceImpl.java
+│  │  │      │                  IdCardNumberUtils.java
+│  │  │      │                  UserInfoServiceImpl.java
+│  │  │      │                  UserServiceImpl.java
+│  │  │              
+│  │  └─resources
+│  │      │  application.yml       统一配置文件
+│  │      │  
+│  │      ├─mapper
+│  │      │      UserMapper.xml     自定义SQL文件
+│  │      │      
+│  │      ├─static
+│  │      └─templates
+│  └─test                         测试类
+│      └─java
+│          └─com
+│              └─example
+│                  └─hou
+│                          HouApplicationTests.java
+│
+
+
+
 
 *springboot*+*mybatisplus*+*Mysql  *
 用**postman**测试接口  
