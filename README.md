@@ -95,10 +95,14 @@ ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖
 
 # Development - 开发（关于开发的文档信息（API 等））
 ### Changelog - 更新日志（一个简短的历史记录（更改，替换或者其他。）  
+尝试后端优化：  简单分页查询  Redis缓存token时效  邮箱注册验证模块  静态资源访问  嵌入式servlet容器  文件上传下载  
+定时器  热部署的实现  持久层的优化  security安全框架和数据库认证
+
+
 ### FAQ - 常见问题（常见问题）  
     有问题问上帝lol
 ```(可以加编程语言名)
-        System.out.println("hello world");
+System.out.println("hello world");
 ```
 ### Support - 支持  
 ### Dos - 文档（更多文档）  
