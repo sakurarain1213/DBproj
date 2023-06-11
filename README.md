@@ -6,6 +6,7 @@
 Summary - 概要     tree 项目硬盘地址 /f > 树状图输出地址result.txt   即可
 DBproj  主要目录结构和介绍
 
+```
 │  pom.xml     在这里管理依赖仓库
 │  README.md
 │
@@ -75,9 +76,7 @@ DBproj  主要目录结构和介绍
 │                  └─hou
 │                          HouApplicationTests.java
 │
-
-
-
+```
 
 *springboot*+*mybatisplus*+*Mysql  *
 用**postman**测试接口  
