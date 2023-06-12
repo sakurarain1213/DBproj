@@ -5,8 +5,15 @@ server:
 spring:
 #在问号位置修改数据库的名字
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #p6spy 组件请勿在生产环境使用，因为有性能损耗，推荐仅本地开发开启使用。  根据前言可以在csdn找到博客 恢复成原来的环境
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    #用于sql耗时测试  注意调试完毕要改回原来的class
+
+    #url: jdbc:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    url: jdbc:p6spy:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    #用于sql耗时测试  注意调试完毕要改回原来的class
+
     username: root
     password: 123456
   mvc:

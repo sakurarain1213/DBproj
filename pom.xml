@@ -94,7 +94,16 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.30</version>
         </dependency>-->
-
+        <!--用于sql耗时测试的输出  开发结束后可以删除
+        P6Spy是一个可以用来在应用程序中拦截和修改数据操作语句的开源框架。
+         通过P6Spy我们可以对SQL语句进行拦截   相当于一个SQL语句的记录器，
+         用它作相关的分析   比如性能分析
+        -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.9.1</version>
+        </dependency>
 
         <!-- jieba 分词库 https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
         <dependency>

@@ -32,9 +32,8 @@ localhost:8080/flight/get
 {
     "depAirport":"香港",
     "arrAirport":"北京"
+
 }
-
-
 
 
  */
