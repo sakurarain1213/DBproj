@@ -89,7 +89,10 @@ public class FlightServiceImpl implements FlightService {
                 //然后进行已知地点的机票查询
                 q
                         .eq("depAirport", l1.get(i).getId())
-                        .eq("arrAirport", l2.get(j).getId());
+                        .eq("arrAirport", l2.get(j).getId())
+
+                        .gt("availableSeats", 0);// availableSeats > 0
+                        //优化到先显示有票航班
             }
         }
 

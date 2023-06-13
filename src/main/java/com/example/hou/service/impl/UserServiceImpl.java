@@ -123,8 +123,6 @@ public class UserServiceImpl  implements UserService {
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
         userUpdateWrapper.eq("sfz", user.getSfz());
 
-
-
         int flag = userMapper.update(temp, userUpdateWrapper);
         if (flag == 1) {
             return "SUCCESS";
@@ -132,9 +130,6 @@ public class UserServiceImpl  implements UserService {
             return "用户不存在";
         }
 
-
   }
-
-
 
 }

@@ -70,7 +70,7 @@ DBproj  主要目录结构和介绍
 │  │      │      
 │  │      ├─static
 │  │      └─templates
-│  └─test                         测试类
+│  └─test                            测试类
 │      └─java
 │          └─com
 │              └─example
@@ -79,7 +79,7 @@ DBproj  主要目录结构和介绍
 │
 ```
 
-*springboot*+*mybatisplus*+*Mysql  *
+*springboot*+*mybatisplus*+*Mysql*
 用**postman**测试接口  
 `~写表过程：entity层 service层(impl实现层)  （mapper层可不写）  controller层   测试`
 Features - 特性  
@@ -96,8 +96,12 @@ ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖
 # Development - 开发（关于开发的文档信息（API 等））
 ### Changelog - 更新日志（一个简短的历史记录（更改，替换或者其他。）  
 尝试后端优化：
-  *订票功能+表增加列表示是否乘坐或过期*
-  *我的订票历史查询*
+  *购票的并发问题 可以优化  一开始只要显示有票航班 而且还要保证点进去也可能没票 okk*
+  *订票功能okk+表增加列status表示订单状态：乘坐与否或过期*
+  *选座功能*
+  *退改签功能*
+  *我的订票历史查询okk*
+  *钱包和支付系统——使用机票票价——多乘客订票的改进*
   *sql执行时间显示与优化okkk*
   简单分页查询
   Redis缓存token时效

@@ -24,10 +24,10 @@ public  class Book {
 
     private String ordernum;
 
-    @TableId(value = "user_id", type = IdType.AUTO)
+    @TableId(value = "userId")
     private String userId;
 
-    @TableId(value = "flight_id")
+    @TableId(value = "flightId")
     private String flightId;
 
     private Date date;
@@ -36,5 +36,11 @@ public  class Book {
 
     private String service;
 
+    /*
+    订单状态  暂时用string描述
+    支付  已乘坐 未乘坐过期等等
+
+    */
+    private String status;
 
 }

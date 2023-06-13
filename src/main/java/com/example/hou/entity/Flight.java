@@ -53,4 +53,10 @@ public  class Flight  {
 
     private String model;
 
+    /*
+    航班状态  延误等
+
+    */
+    private String status;
+
 }
