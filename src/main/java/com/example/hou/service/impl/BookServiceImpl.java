@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.hou.service.impl.CheckPassword.checkPasswordRule;
@@ -115,6 +116,62 @@ public class BookServiceImpl implements BookService {
 
 
     }
+
+
+    //退票
+    @Override
+    public String refundService(Book book) {
+        if ("".equals(book.getUserId())) {
+            return "需要用户信息";
+        } else if ("".equals(book.getFlightId())) {
+            return "请选择航班";
+        }
+        //else if ("".equals(book.getOrdernum())) {
+        //return "需要订单号";   这个num似乎没用
+        //}
+        else {
+
+            String u=book.getUserId();
+            String f=book.getFlightId();
+            QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
+            queryWrapper
+                    .eq("userId", u)
+                    .eq("flightId", f);
+            List<Book> B = bookMapper.selectList(queryWrapper);
+            if(B.size()==0)  return "没有购票记录 无法退票";
+
+
+            /*
+                多表联查再 航班座位要重新+1
+            */
+            Flight F = flightMapper.searchByID(f);
+            if(F==null) return "航班号无效";
+            Integer seat=F.getAvailableSeats();
+            Flight temp = new Flight();
+            temp.setAvailableSeats(seat+1);
+            UpdateWrapper<Flight> filghtUpdateWrapper = new UpdateWrapper<>();
+            filghtUpdateWrapper.eq("ID",f);
+            flightMapper.update(temp, filghtUpdateWrapper);
+
+
+
+            /*购票book表记录删除 （最好是加退票日志而不是直接删除  即逻辑删除）*/
+            //DeleteWrapper<Book> wrapper = new DeleteWrapper<>(); 报错  delete条件构造器不存在
+            //并且id无效  因此delete by id方法无效  因此尝试map类型的删除
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("userId", u);
+            map.put("flightId", f);
+            int result = bookMapper.deleteByMap(map);
+            if(result==1) return "SUCCESS";
+            else return "出错 涉及多条记录删除 请检查";
+        }
+
+
+    }
+
+
+
+
 
 
 }

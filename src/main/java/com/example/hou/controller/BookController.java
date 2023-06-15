@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /*
-
+//购票
 localhost:8080/book/add
 {
     "userId":"110230195104089642",
@@ -26,11 +26,18 @@ localhost:8080/book/add
     "seatnum":"123"
 }
 
-
+//查自己的购票记录
 localhost:8080/book/history
 {
     "userId":"110230195104089642",
 
+}
+
+//退自己买的票
+localhost:8080/book/delete
+{
+    "userId":"110230195104089642",
+    "flightId":"97MNR08V"
 }
 
 
@@ -73,7 +80,15 @@ public class BookController {
         }
     }
 
-
+    @RequestMapping("/delete")
+    public Result bookdelete(@RequestBody Book book) {
+        String msg = bookService.refundService(book);
+        if (("SUCCESS").equals(msg)) {
+            return ResultUtil.success("退票成功");
+        } else {
+            return ResultUtil.error(msg);
+        }
+    }
 
 
 }
