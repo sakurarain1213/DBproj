@@ -3,7 +3,7 @@
 ========================
 （后端 历时一天零**半个月**搞得差不多了）
 # Introduction - 介绍
-Summary - 概要    
+Summary -  航班查询购买项目
 在cmd中     tree 项目硬盘地址 /f > 树状图输出地址result.txt   即可
 DBproj  主要目录结构和介绍
 
