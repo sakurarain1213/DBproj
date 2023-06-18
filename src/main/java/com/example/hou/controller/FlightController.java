@@ -28,11 +28,12 @@ import java.util.List;
 
 
 机票查询
-localhost:8080/flight/get
+localhost:8080/flight/get     depTime出发时间如果不选择就默认实际的当天时间   价格写了就限定最高价
 {
-    "depAirport":"香港",
-    "arrAirport":"北京"
-
+    "depAirport":"天津",
+    "arrAirport":"西安",
+    "depTime":"2022-12-31 00:00:00",
+    "price":1640
 }
 
 
@@ -57,8 +58,7 @@ public class FlightController {
     @RequestMapping("/get")
     public Result getflight(@RequestBody Flight flight) {
         List<Flight> l = flightService.getFlightService(flight);
-        if (l.size()>0) {
-
+        if (l!=null) {
             //相当于重新打开了ResultUtil的封装  自定义返回消息也在返回类的属性位置编辑
             Result r=new Result();
             r.setCode(200);
