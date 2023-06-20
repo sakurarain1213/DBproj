@@ -54,6 +54,7 @@ public class FlightServiceImpl implements FlightService {
         String city2 = flight.getArrAirport();
         //Date time=flight.getDepTime();
         Date time1 = flight.getDepTime();
+        Boolean flag=true;//表示有没有传时间
         // 其它属性都是没有也行
         String name = flight.getAirline();//航空公司
 
@@ -69,6 +70,7 @@ public class FlightServiceImpl implements FlightService {
        //如果不传时间 默认用当前时间
        if(time1==null)
        {
+           flag=false;
         Date now=new Date();//东八区相差8小时debug
            time1=new Date();
         time1.setTime(now.getTime()+8*3600000);
@@ -77,20 +79,36 @@ public class FlightServiceImpl implements FlightService {
         //尝试用wrapper 实现SQL的等于 介于 大 小  筛选 合并 查询   尤其要实现外键关联的多表联查
         //先根据模糊机场名找到代码   注意一个城市有两个机场的可能
 
+
+
+        //debug显示机场具体名字的问题  在于q的select列只有id  需要加name
         QueryWrapper<Airport> qw1 = new QueryWrapper<>();//注意这里是机场表
         qw1
-                .select("airport.id")
+                .select("airport.id","airport.name")//重点debug行  要加列
                 .like("airport.name", city1);
         List<Airport> l1 = airportMapper.selectList(qw1);
         QueryWrapper<Airport> qw2 = new QueryWrapper<>();//注意这里是机场表
         qw2
-                .select("airport.id")
+                .select("airport.id","airport.name")//重点debug行  要加列
                 .like("airport.name", city2);
         List<Airport> l2 = airportMapper.selectList(qw2);
 
         //先看看l1  l2 的结构是什么
         //然后经典遍历list
+        //debug   防止输入不存在的机场导致遍历所有记录的超时错误
+        // queryWrapper找不到返回0元素list  不是null !!
+        if (l1.size()==0 || l2.size()==0) {
+            return null;
+        }
 
+        /*
+        for (int i = 0; i < l1.size(); i++) {
+            System.out.println(l1.get(i));
+        }
+        for (int i = 0; i < l2.size(); i++) {
+            System.out.println(l2.get(i));
+        }
+         */
         QueryWrapper<Flight> q = new QueryWrapper<>();//注意回到机票表
 
         //准备时间筛选的工作
@@ -123,8 +141,11 @@ public class FlightServiceImpl implements FlightService {
                         //再写时间查询
                 //System.out.println("!!!!!!!1"+s1+s2);
                 //debug   Date类型的列用格式化的String来筛选
-                        q.ge("depTime",s1)
-                        .le("depTime",s2);
+                        q.ge("depTime",s1);
+                        //传了时间才限制在一天 不然可以看到之后所有机票
+                        if(flag)  q.le("depTime",s2);
+                        //有价格列再筛选 数值对象   float的空不是null  而是0.0  注意  debug 要放到每个or里面
+                        if(price!=0.0)  q.le("price",price);
             }
         }
         //然后可以查询其它信息 再返回   也可以按照特定规则排序（尝试实现一下  加传入一个string即可）
@@ -132,11 +153,56 @@ public class FlightServiceImpl implements FlightService {
         //默认排序
         q.orderByAsc("depTime");
 
-        //有价格列再筛选 数值对象   float的空不是null  而是0.0  注意
-        if(price!=0.0)  q.le("price",price);
+
 
         //测试传入任意值
         List <Flight> l = flightMapper.selectList(q);
+        if (l.size()==0)   return null;
+        //前端优化debug  把flight出发到达地的数字换成airport表的具体机场名字
+         for (int i = 0; i < l.size(); i++) {
+             System.out.println(l.get(i));
+             Flight temp=l.get(i);
+             String depname=temp.getDepAirport();//是数字
+             String arrname=temp.getArrAirport();//是数字
+
+             //拿数字找
+             Airport depA=airportMapper.selectById(depname);//这个是默认存在方法 返回一个对象
+             Airport arrA=airportMapper.selectById(arrname);
+
+             //System.out.println(depA); System.out.println(arrA); 然后拼接成字符串即可
+             //String重复利用罢了
+             depname=depA.getName()+depA.getCode();
+             arrname=arrA.getName()+arrA.getCode();
+
+             temp.setDepAirport(depname);temp.setArrAirport(arrname);
+             l.set(i,temp);
+         }
+        // System.out.println(temp+"  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  ");
+        //重点debug行
+        //为什么存在未知mapper错误  ????????
+
+        // Airport temp1=airportMapper.airportSearchID("12");
+        //换朴素方法替换  不对
+        /*
+        int cnt=0;
+            for (int i = 0; i <l1.size(); i++) {
+                for (int j = 0; j <l2.size(); j++) {
+
+                        String depAirportname=l1.get(i).getName();
+                        String arrAirportname=l2.get(j).getName();
+                        //System.out.println("!!!!!!!!!!!!!!!!"+depAirportname+arrAirportname);
+                        Flight temp=l.get(cnt);
+                        temp.setDepAirport(depAirportname);
+                        temp.setArrAirport(arrAirportname);
+                        l.set(cnt,temp);
+                        cnt++;
+                }
+                }
+           // temp.setDepAirport(depname);
+           // temp.setDepAirport(arrname);
+           // l.set(i,temp);
+            //System.out.println(a);
+           */
         return l;
     }
 

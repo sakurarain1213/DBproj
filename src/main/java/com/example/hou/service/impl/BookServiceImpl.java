@@ -48,6 +48,8 @@ public class BookServiceImpl implements BookService {
             return "请选择座位号";
         } else {
 
+
+            //经典方法有二  传入对象既作为参数，也作为查询结果接受体  或者新建对象作为结果
             //如何判断已经订票 要用flight和user 两个ID同时确定 存在即重复订
             String u=book.getUserId();
             String f=book.getFlightId();

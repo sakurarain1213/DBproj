@@ -100,6 +100,8 @@ ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖
 *购票的并发问题 可以优化  一开始只要显示有票航班 而且还要保证点进去也可能没票 okk*<br />
 *选票订票功能okk+表增加列status表示订单状态：乘坐与否或过期*<br />
 *选座功能*<br />
+*头像文件等*<br />
+*评价系统和排序规则优化*<br />
 *退改签功能okk*<br />
 *我的订票历史查询okk*<br />
 *钱包和支付系统——使用机票票价——多乘客订票的改进*<br />
@@ -114,8 +116,10 @@ Redis缓存token时效
 热部署的实现
 持久层的优化
 security安全框架和数据库认证
-
-
+为了保证数据量  生成了百万级别的随机数据集
+Insert into Table2(field1,field2,...) select value1,value2,... from Table1 on duplicate key update Table1.id = Table2.id
+可以保证不断合并过程中避免主键冲突
+github推送被拒 因为单个文件有 ~120MB 的限制  不要上传过大的sql文件
 ### FAQ - 常见问题（常见问题）  
     有问题问上帝lol
 ```(可以加编程语言名)

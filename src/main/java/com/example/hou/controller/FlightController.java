@@ -28,9 +28,10 @@ import java.util.List;
 
 
 机票查询
-localhost:8080/flight/get     depTime出发时间如果不选择就默认实际的当天时间   价格写了就限定最高价
+localhost:8080/flight/get     depTime出发时间如果不选择就默认实际的当天时间
+价格写了就限定最高价   机场可以精确到名称和机场代码
 {
-    "depAirport":"天津",
+    "depAirport":"上海浦东",
     "arrAirport":"西安",
     "depTime":"2022-12-31 00:00:00",
     "price":1640
