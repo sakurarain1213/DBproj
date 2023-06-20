@@ -120,6 +120,7 @@ security安全框架和数据库认证
 Insert into Table2(field1,field2,...) select value1,value2,... from Table1 on duplicate key update Table1.id = Table2.id
 可以保证不断合并过程中避免主键冲突
 github推送被拒 因为单个文件有 ~120MB 的限制  不要上传过大的sql文件
+IDEA的本地提交回滚策略：左下角git  选择本地某个记录 右键回滚  一定注意选择mixed选项  保留源码修改  只取消了本地提交
 ### FAQ - 常见问题（常见问题）  
     有问题问上帝lol
 ```(可以加编程语言名)
