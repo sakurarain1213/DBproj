@@ -79,15 +79,24 @@ DBproj  主要目录结构和介绍
 │
 ```
 
-*springboot*+*mybatisplus*+*Mysql*
-用**postman**测试接口  
+## 技术栈
+
+- 编程语言：Java
+- 构建工具：IDEA
+- 后端框架：Springboot
+- 插件支持：MybatisPlus
+- 数据库：Mysql
+- 数据库可视化工具：Navicat
+- 接口测试：Postman
+
+
 `~写表过程：entity层 service层(impl实现层)  （mapper层可不写）  controller层   测试`
 Features - 特性  
 特有的优美
 Requirements - 必要条件（环境，对所有项目，和所有子模块和库的描述。）  
-Matlab  
 
 # Configuration - 配置（配置信息。）
+- 部署：IDEA打开项目文件，添加spring框架支持，自动下载maven依赖，运行application启动类
 Installation - 安装
 Usage - 用法   
 ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖  
