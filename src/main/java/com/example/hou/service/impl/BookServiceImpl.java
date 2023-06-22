@@ -2,6 +2,7 @@ package com.example.hou.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.example.hou.entity.Airport;
 import com.example.hou.entity.Book;
 import com.example.hou.entity.Flight;
 import com.example.hou.entity.User;
@@ -34,8 +35,13 @@ public class BookServiceImpl implements BookService {
     @Autowired
     FlightMapper flightMapper;
 
+    @Autowired
+    AirportMapper airportMapper;
+
     @Override
     public String bookService(Book book) {
+
+
 
         if ("".equals(book.getUserId())) {
             return "需要用户信息";
@@ -77,7 +83,11 @@ public class BookServiceImpl implements BookService {
             //对应航班座位-1  不要忘记update
             Flight temp = new Flight();
                 temp.setAvailableSeats(seat-1);
+                temp.setPrice(F.getPrice()); //尝试朴素debug
+
             //查询  条件构造器
+            //重点debug  订票之后 价格为0的问题
+            // 进行Update操作时 UpdateWrapper会将未指定的字段更新为0！！！！ 见上一行朴素debug
                 UpdateWrapper<Flight> filghtUpdateWrapper = new UpdateWrapper<>();
                                 filghtUpdateWrapper.eq("ID",f);
                 flightMapper.update(temp, filghtUpdateWrapper);
@@ -105,7 +115,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public List<Book> historyService(Book book) {
+    public List<Flight> historyService(Book book) {
 
         if ("".equals(book.getUserId()))  return null;
 
@@ -113,9 +123,57 @@ public class BookServiceImpl implements BookService {
             queryWrapper
                     .eq("userId", book.getUserId());
             List<Book> B = bookMapper.selectList(queryWrapper);
-            return B;
+           // return B;
+            //debug  返回 book每一条的 flight ID
+
+
+
+        QueryWrapper<Flight> f = new QueryWrapper<>();
+        List<Flight> l;
+        for (int i = 0; i <B.size(); i++) {
+           f
+                   .or()
+                   .eq("ID",B.get(i).getFlightId());
+        }
+        l= flightMapper.selectList(f);
             //可以增加时间条件查询   再说
 
+
+
+
+
+        //前端优化debug  把flight出发到达地的数字换成airport表的具体机场名字
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println(l.get(i));
+            Flight temp=l.get(i);
+            String depname=temp.getDepAirport();//是数字
+            String arrname=temp.getArrAirport();//是数字
+
+            //拿数字找
+            Airport depA=airportMapper.selectById(depname);//这个是默认存在方法 返回一个对象
+            Airport arrA=airportMapper.selectById(arrname);
+
+            //System.out.println(depA); System.out.println(arrA); 然后拼接成字符串即可
+            //String重复利用罢了
+            depname=depA.getName()+depA.getCode();
+            arrname=arrA.getName()+arrA.getCode();
+
+            temp.setDepAirport(depname);temp.setArrAirport(arrname);
+            l.set(i,temp);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+            return l;
 
     }
 

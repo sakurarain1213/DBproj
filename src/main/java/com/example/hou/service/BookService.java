@@ -10,7 +10,7 @@ import java.util.List;
 public interface BookService {
 
     public String bookService(Book book);
-    public List<Book> historyService(Book book);
+    public List<Flight> historyService(Book book);
 
     public String refundService(Book book);
 }

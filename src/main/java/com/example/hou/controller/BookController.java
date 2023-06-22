@@ -30,7 +30,6 @@ localhost:8080/book/add
 localhost:8080/book/history
 {
     "userId":"110230195104089642",
-
 }
 
 //退自己买的票
@@ -53,6 +52,8 @@ public class BookController {
 
     @Autowired
     BookService bookService;
+   // @Autowired
+   // FlightService flightService;
 
     @RequestMapping("/add")
     public Result bookadd(@RequestBody Book book) {
@@ -66,7 +67,7 @@ public class BookController {
 
     @RequestMapping("/history")
     public Result historybook(@RequestBody Book book) {
-        List<Book> l = bookService.historyService(book);
+        List<Flight> l = bookService.historyService(book);
         if (l.size()>0) {
             //相当于重新打开了ResultUtil的封装  自定义返回消息也在返回类的属性位置编辑
             Result r=new Result();
