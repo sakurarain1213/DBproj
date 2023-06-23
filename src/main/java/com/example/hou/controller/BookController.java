@@ -3,6 +3,7 @@ package com.example.hou.controller;
 
 import com.example.hou.entity.Book;
 import com.example.hou.entity.Flight;
+import com.example.hou.entity.Temp_hot_destination;
 import com.example.hou.result.Result;
 import com.example.hou.result.ResultUtil;
 import com.example.hou.service.BookService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 /*
@@ -38,6 +40,10 @@ localhost:8080/book/delete
     "userId":"110230195104089642",
     "flightId":"97MNR08V"
 }
+
+热门目的地查询
+localhost:8080/book/hot
+不需要传参
 
 
  */
@@ -90,6 +96,25 @@ public class BookController {
             return ResultUtil.error(msg);
         }
     }
+
+
+
+    @RequestMapping("/hot")
+    public Result hotdestination() {
+        List<Temp_hot_destination>  l = bookService.hotbook();
+        if (l.size()>0) {
+            //相当于重新打开了ResultUtil的封装  自定义返回消息也在返回类的属性位置编辑
+            Result r=new Result();
+            r.setCode(200);
+            r.setMsg("成功查询到记录数量："+l.size());
+            r.setData(l);
+            return r;
+        }
+        else {
+            return ResultUtil.error("缺少查询条件或查询结果为空");
+        }
+    }
+
 
 
 }

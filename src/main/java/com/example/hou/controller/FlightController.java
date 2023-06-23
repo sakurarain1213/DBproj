@@ -38,6 +38,11 @@ localhost:8080/flight/get     depTime出发时间如果不选择就默认实际�
 }
 
 
+低价机票查询
+localhost:8080/flight/lowprice
+不需要传参
+
+
  */
 @Slf4j
 @RestController
@@ -59,18 +64,32 @@ public class FlightController {
     @RequestMapping("/get")
     public Result getflight(@RequestBody Flight flight) {
         List<Flight> l = flightService.getFlightService(flight);
-        if (l!=null) {
+        if (l != null) {
             //相当于重新打开了ResultUtil的封装  自定义返回消息也在返回类的属性位置编辑
-            Result r=new Result();
+            Result r = new Result();
             r.setCode(200);
-            r.setMsg("成功查询到记录数量："+l.size());
+            r.setMsg("成功查询到记录数量：" + l.size());
             r.setData(l);
             return r;
-        }
-        else {
+        } else {
             return ResultUtil.error("缺少查询条件或查询结果为空");
         }
     }
 
-}
 
+    @RequestMapping("/lowprice")
+    public Result lowprice() {
+        List<Flight> l = flightService.lowprice();
+        if (l != null) {
+            Result r = new Result();
+            r.setCode(200);
+            r.setMsg("成功查询到低价机票数量：" + l.size());
+            r.setData(l);
+            return r;
+        } else {
+            return ResultUtil.error("缺少查询条件或查询结果为空");
+        }
+
+    }
+
+}

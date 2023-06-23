@@ -44,6 +44,20 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public List<Flight> lowprice(){
+
+        QueryWrapper<Flight> q = new QueryWrapper<>();
+            q.orderByAsc("price")
+                    .last("limit 0,10");//取最开始的10条记录  范围可以自定义 最大值 最小值
+        List <Flight> l = flightMapper.selectList(q);
+        return l;
+    }
+
+
+
+
+
+    @Override
     public List<Flight> getFlightService(Flight flight) {
 /***
  * 重大debug
@@ -160,7 +174,7 @@ public class FlightServiceImpl implements FlightService {
         if (l.size()==0)   return null;
         //前端优化debug  把flight出发到达地的数字换成airport表的具体机场名字
          for (int i = 0; i < l.size(); i++) {
-             System.out.println(l.get(i));
+            // System.out.println(l.get(i));
              Flight temp=l.get(i);
              String depname=temp.getDepAirport();//是数字
              String arrname=temp.getArrAirport();//是数字

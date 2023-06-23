@@ -17,4 +17,7 @@ public interface FlightService {
 
     public String searchService(Flight flight);
     public List<Flight> getFlightService(Flight flight);
+
+    public List<Flight> lowprice();
+
 }

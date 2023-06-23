@@ -1,11 +1,9 @@
 package com.example.hou.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.example.hou.entity.Airport;
-import com.example.hou.entity.Book;
-import com.example.hou.entity.Flight;
-import com.example.hou.entity.User;
+import com.example.hou.entity.*;
 import com.example.hou.mapper.AirportMapper;
 import com.example.hou.mapper.BookMapper;
 import com.example.hou.mapper.FlightMapper;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.hou.service.impl.CheckPassword.checkPasswordRule;
 import static com.example.hou.service.impl.IdCardNumberUtils.getAgeFromIdCard;
@@ -40,8 +39,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String bookService(Book book) {
-
-
 
         if ("".equals(book.getUserId())) {
             return "需要用户信息";
@@ -162,17 +159,6 @@ public class BookServiceImpl implements BookService {
             l.set(i,temp);
         }
 
-
-
-
-
-
-
-
-
-
-
-
             return l;
 
     }
@@ -213,8 +199,6 @@ public class BookServiceImpl implements BookService {
             filghtUpdateWrapper.eq("ID",f);
             flightMapper.update(temp, filghtUpdateWrapper);
 
-
-
             /*购票book表记录删除 （最好是加退票日志而不是直接删除  即逻辑删除）*/
             //DeleteWrapper<Book> wrapper = new DeleteWrapper<>(); 报错  delete条件构造器不存在
             //并且id无效  因此delete by id方法无效  因此尝试map类型的删除
@@ -228,6 +212,61 @@ public class BookServiceImpl implements BookService {
 
 
     }
+
+
+    @Override
+    public List<Temp_hot_destination> hotbook(){
+
+        //购票纪录中的   热门目的地查询
+        //返回的是一个符合类型  地点+次数 相当于改变了表的结构 返回复杂耦合内容
+        //涉及订票表关联到机票表    groupby
+        //关于Mybatis plus 使用QueryWrapper,group by 分组 + having ,自定义查询字段使用方法
+        /*   逻辑如下
+
+        SELECT flight.arrAirport AS destination, COUNT(*) AS count
+            FROM book b
+            JOIN flight f ON b.flightId = f.ID
+        GROUP BY f.destination
+         ORDER BY count DESC;   先在navicat测试SQL 通过才行！！！
+        正确SQL如下
+       SELECT arrAirport AS destination, COUNT(*) AS count
+            FROM book b JOIN flight f ON b.flightId = f.ID
+        GROUP BY arrAirport
+         ORDER BY count DESC;
+        （ 最后  limit  10  可以选出前十大）
+               q
+                .select("flight.destination as destination , count(*) as count")
+                .join("flight f on book.flightID = f.ID")
+                .groupBy("f.destination")
+                .orderByDesc("count");
+
+          但是Mybatis Plus 封装的 mapper 不支持 join，
+          如果需要支持就必须自己去实现。但是对于大部分的业务场景来说，
+          都需要多表 join，要不然就没必要采用关系型数据库了。
+          用插件<dependency><groupId>com.github.yulichang</groupId><artifactId>mybatis-plus-join</artifactId><version>1.2.4</version></dependency>
+          或者直接SQL  只需要在xml文件里写好sql  resulttype写成list中的每个元素即可    如下
+
+          尝试性能优化   map本身就是一个很大的映射集合  外面不用加list
+         yml 的配置文件里的url要加  & allowMultiQueries=true   才能用sql
+        */
+        List<Temp_hot_destination> d = bookMapper.hotDestination();
+
+        //这里选十大热门目的地  转名称
+        for(int i=0;i<d.size();i++) {
+            Temp_hot_destination temp=d.get(i);
+            String arrname=temp.getDestination();//是数字
+            //拿数字找
+            Airport arrA=airportMapper.selectById(arrname);
+
+            arrname=arrA.getCity()+arrA.getCode();//换成城市名
+            temp.setDestination(arrname);
+            d.set(i,temp);
+        }
+
+        return  d;
+
+    }
+
 
 
 

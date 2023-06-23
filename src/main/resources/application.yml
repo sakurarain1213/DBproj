@@ -11,7 +11,7 @@ spring:
     #用于sql耗时测试  注意调试完毕要改回原来的class
 
     #url: jdbc:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
-    url: jdbc:p6spy:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC
+    url: jdbc:p6spy:mysql://localhost:3306/flight?useUnicode=true & characterEncoding=utf-8 & allowPublicKeyRetrieval=true&useSSL=false & serverTimezone=UTC & allowMultiQueries=true
     #用于sql耗时测试  注意调试完毕要改回原来的class
 
     username: root
