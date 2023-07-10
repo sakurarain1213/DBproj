@@ -13,8 +13,6 @@ import java.io.UnsupportedEncodingException;
 import static com.example.hou.service.impl.CheckPassword.checkPasswordRule;
 import static com.example.hou.service.impl.IdCardNumberUtils.*;
 
-
-
 /**
  * <p>
  *  服务实现类
@@ -29,7 +27,15 @@ public class UserServiceImpl  implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    public User getService(User user){
+        User userE = userMapper.searchBySfz(user.getSfz());
+        if (userE != null) {
+                return userE;
+            } else {
+                return null;
+            }
 
+    }
 
     @Override
     public String loginService(User user) {

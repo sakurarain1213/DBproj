@@ -19,4 +19,6 @@ public interface UserService {
 
     public String updateService(User user);
 
+    public User getService(User user);
+
 }

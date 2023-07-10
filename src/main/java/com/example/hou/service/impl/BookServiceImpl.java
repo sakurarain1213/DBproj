@@ -51,7 +51,6 @@ public class BookServiceImpl implements BookService {
             return "请选择座位号";
         } else {
 
-
             //经典方法有二  传入对象既作为参数，也作为查询结果接受体  或者新建对象作为结果
             //如何判断已经订票 要用flight和user 两个ID同时确定 存在即重复订
             String u=book.getUserId();
@@ -123,7 +122,7 @@ public class BookServiceImpl implements BookService {
            // return B;
             //debug  返回 book每一条的 flight ID
 
-
+        if(B.size()==0) return null;
 
         QueryWrapper<Flight> f = new QueryWrapper<>();
         List<Flight> l;
@@ -134,10 +133,6 @@ public class BookServiceImpl implements BookService {
         }
         l= flightMapper.selectList(f);
             //可以增加时间条件查询   再说
-
-
-
-
 
         //前端优化debug  把flight出发到达地的数字换成airport表的具体机场名字
         for (int i = 0; i < l.size(); i++) {
@@ -158,9 +153,7 @@ public class BookServiceImpl implements BookService {
             temp.setDepAirport(depname);temp.setArrAirport(arrname);
             l.set(i,temp);
         }
-
             return l;
-
     }
 
 
@@ -209,7 +202,6 @@ public class BookServiceImpl implements BookService {
             if(result==1) return "SUCCESS";
             else return "出错 涉及多条记录删除 请检查";
         }
-
 
     }
 
@@ -266,11 +258,6 @@ public class BookServiceImpl implements BookService {
         return  d;
 
     }
-
-
-
-
-
 
 
 }

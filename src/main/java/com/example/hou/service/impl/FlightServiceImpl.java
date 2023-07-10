@@ -176,8 +176,8 @@ public class FlightServiceImpl implements FlightService {
          for (int i = 0; i < l.size(); i++) {
             // System.out.println(l.get(i));
              Flight temp=l.get(i);
-             String depname=temp.getDepAirport();//是数字
-             String arrname=temp.getArrAirport();//是数字
+             String depname=temp.getDepAirport();
+             String arrname=temp.getArrAirport();
 
              //拿数字找
              Airport depA=airportMapper.selectById(depname);//这个是默认存在方法 返回一个对象

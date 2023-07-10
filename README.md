@@ -22,7 +22,6 @@ DBproj  主要目录结构和介绍
 │  │  │      ├─example
 │  │  │      │  └─hou
 │  │  │      │      │  HouApplication.java      启动类
-│  │  │      │      │
 │  │  │      │      │      
 │  │  │      │      ├─controller                    前端交互第一层接口
 │  │  │      │      │      AirportController.java
@@ -95,16 +94,18 @@ DBproj  主要目录结构和介绍
 
 
 `~写表过程：entity层 service层(impl实现层)  （mapper层可不写）  controller层   测试`
-Features - 特性  
-特有的优美
-Requirements - 必要条件（环境，对所有项目，和所有子模块和库的描述。）  
-
-# Configuration - 配置（配置信息。）
-- 部署：IDEA打开项目文件，添加spring框架支持，自动下载maven依赖，运行application启动类
+Features - 特性
+Requirements - 必要条件（环境，模块描述）  
 Installation - 安装
-Usage - 用法   
-ez   O(∩_∩)O   见maven配置文件pom.xml  自行下载依赖  
-在yml配置文件里更改本地数据库连接 启动Application.java即可  
+Usage - 用法
+ez   O(∩_∩)O
+# Configuration - 配置（配置信息。）
+- 部署：IDEA打开项目文件，添加spring框架支持，进入maven配置文件pom.xml 点击蓝色更新图标 会自动下载maven依赖
+- 在application.yml配置文件里更改本地数据库连接 启动Application.java即可  
+- 项目检查和运行前所需的sql建表命令 见flight.sql（大数据集）和flight_temp.sql(样例数据集)
+- 项目检查需要的sql语句和结果见picture文件夹下的截图
+- 上面只是一些样例截图，实际需要的url和功能在controller文件夹下每个java文件的注释中查看
+
 
 # Development - 开发（关于开发的文档信息（API 等））
 ### Changelog - 更新日志（一个简短的历史记录（更改，替换或者其他。）  
@@ -141,6 +142,20 @@ Insert into Table2(field1,field2,...) select value1,value2,... from Table1 on du
 github推送被拒 因为单个文件有 ~120MB 的限制  不要上传过大的sql文件
 IDEA的本地提交回滚策略：左下角git  选择本地某个记录 右键回滚  一定注意选择mixed选项  保留源码修改  只取消了本地提交
 ### FAQ - 常见问题（常见问题）  
+
+- 云服务器部署过程：
+- 阿里云+xshell+Xftp（可视化）
+
+恭喜您，试用ECS创建成功
+实例ID：i-bp1h0hhvaxtlel9fsv63
+47.110.83.104  (公)
+172.28.49.119  (私有)
+
+porn.xml文件添加
+<packaging>jar</packaging>
+再双击meaven的package即可在target文件夹下得到hou-0.0.1-SNAPSHOT.jar包
+
+
     有问题问上帝lol
 ```(可以加编程语言名)
 System.out.println("hello world");

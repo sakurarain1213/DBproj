@@ -38,6 +38,12 @@ localhost:8080/user/update
     "name":"张三"
 }
 
+获得用户信息
+localhost:8080/user/get
+{
+    "sfz":"123456789012345677"
+}
+
  */
 
 
@@ -81,7 +87,15 @@ public class UserController {
         }
     }
 
-
+    @RequestMapping("/get")
+    public Result getUser(@RequestBody User user) {
+        User u = userService.getService(user);
+        if (u!=null) {
+            return ResultUtil.success(u);
+        } else {
+            return ResultUtil.error("获取失败");
+        }
+    }
 
 }
 
