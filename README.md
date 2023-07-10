@@ -143,10 +143,11 @@ github推送被拒 因为单个文件有 ~120MB 的限制  不要上传过大的
 IDEA的本地提交回滚策略：左下角git  选择本地某个记录 右键回滚  一定注意选择mixed选项  保留源码修改  只取消了本地提交
 ### FAQ - 常见问题（常见问题）  
 
-- 云服务器部署过程：
-- 阿里云+xshell+Xftp（可视化）
 
-恭喜您，试用ECS创建成功
+
+### 云服务器部署过程：
+- 阿里云+xshell+Xftp（可视化）+navicat（本地连接云端数据库） +宝塔面板自动部署软件
+
 实例ID：i-bp1h0hhvaxtlel9fsv63
 47.110.83.104  (公)
 172.28.49.119  (私有)
@@ -154,7 +155,16 @@ IDEA的本地提交回滚策略：左下角git  选择本地某个记录 右键�
 porn.xml文件添加
 <packaging>jar</packaging>
 再双击meaven的package即可在target文件夹下得到hou-0.0.1-SNAPSHOT.jar包
+坑点：一 maven配置里需要加上version ：mysql8.0以上   yml的配置要加上useSSL=false  数据库连接密码不能纯数字
+二 mysql云端数据库报  java.sql.SQLException: null, message from server: "Host '*.*.*.*' is not allowed to connect  要在服务器命令行添加mysql的root权限
+三 宝塔面板的配置： mysql要8.0   nginx要1.22  PHP要7.4   phpmyadmin要5.0  java一键部署要3.5
+四  在一键部署里 设置/usr/java/jdk1.8.0_371/bin/java
+47.110.83.104
+ --server.port=8080   要加空格
 
+五   阿里云安全组  入方向 要开各种端口  包括8080    宝塔也要对应开启入端口
+
+FIN ！
 
     有问题问上帝lol
 ```(可以加编程语言名)
